@@ -287,6 +287,31 @@
               }
             }
           }
+        },
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "Scratch golfer on the range. A completely different species on the first tee.\n\nHow many range swings survive contact with the first hole?\n\n#DrivingRange #GolfSwing #GolfHumor #GolfMemes #AmateurGolf",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-21T12:31:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/memes/M003.jpg",
+                  "metadata": {
+                    "altText": "Side-by-side comparison of a smooth driving-range golf swing and a disastrous course swing."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "post"
+              }
+            }
+          }
         }
       }
     }

@@ -126,6 +126,42 @@
           }
         }
       }
+    },
+    {
+      "post_id": "M002",
+      "kind": "meme",
+      "due": {
+        "instagram": "2026-11-18T00:51:00+00:00",
+        "facebook": "2026-11-17T13:18:00+00:00"
+      },
+      "channels": {
+        "instagram": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af61a2f62b70b94b00da2ab",
+            "text": "The driver is obviously the problem. Couldn't possibly be me. The fourth new one this year should fix it.\n\nWhat's the club you keep replacing instead of fixing your swing?\n\n#GolfEquipment #GolfMemes #DriverProblems #WeekendGolfer #GolfHumor",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-18T00:51:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/memes/M002.jpg",
+                  "metadata": {
+                    "altText": "A smug golfer toasts the idea of buying another driver instead of accepting responsibility for lost balls."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "instagram": {
+                "type": "post",
+                "shouldShareToFeed": true
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

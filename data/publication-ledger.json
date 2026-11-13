@@ -63,6 +63,42 @@
           }
         }
       }
+    },
+    {
+      "post_id": "S001",
+      "kind": "stat",
+      "due": {
+        "instagram": "2026-11-16T03:36:00+00:00",
+        "facebook": "2026-11-15T15:24:00+00:00"
+      },
+      "channels": {
+        "instagram": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af61a2f62b70b94b00da2ab",
+            "text": "Golf's oldest major champion did it one month before turning 51. Phil Mickelson won the 2021 PGA Championship at 50 years, 11 months and 7 days old. It remains one of the clearest reminders that experience can still beat an entire major field. Free Morning Mully newsletter in bio.\n\n#PhilMickelson #PGAChampionship #GolfHistory #GolfStats #Golf",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-16T03:36:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/statistics/S001.jpg",
+                  "metadata": {
+                    "altText": "Morning Mully golf statistic graphic stating that Phil Mickelson became the oldest men's major champion at age 50 years, 11 months and 7 days at the 2021 PGA Championship."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "instagram": {
+                "type": "post",
+                "shouldShareToFeed": true
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

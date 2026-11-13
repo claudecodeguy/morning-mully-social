@@ -190,8 +190,11 @@ def refill(api, ledger, records, now, live=False):
     if len(partial) > 1:
         raise RuntimeError('Multiple incomplete pairs require manual review')
     start_day = floor.astimezone(ZoneInfo(plan.CONFIG["timezone"])).date()
+    target = min(10, int(plan.CONFIG.get("evergreen_queue_target", 10)))
+    if target < 1:
+        raise RuntimeError("Invalid evergreen queue target")
     for n in range(92):
-        if any(occupied(posts, cid) >= 10 for cid in CHANNELS.values()):
+        if any(occupied(posts, cid) >= target for cid in CHANNELS.values()):
             log.append('Queue capacity reached; no more writes.'); break
         entry = partial.pop(0) if partial else None
         if entry:
@@ -202,7 +205,7 @@ def refill(api, ledger, records, now, live=False):
             day = start_day + timedelta(days=n)
             kind = plan.CONFIG['calendar'][day.strftime('%A')]
             if kind == 'newsletter':
-                log.append(str(day) + ': newsletter reserved; approved graphic integration pending'); continue
+                log.append(str(day) + ': newsletter handled by the Codex newsletter automation'); continue
             expected = 'meme' if last_kind == 'stat' else 'stat'
             if kind != expected:
                 continue
@@ -235,7 +238,7 @@ def refill(api, ledger, records, now, live=False):
             log.append(f"{'SCHEDULE' if live else 'WOULD SCHEDULE'} {row['post_id']} {service} {body['dueAt']}")
             if live:
                 # Fresh queue count catches manual additions during this run.
-                if occupied(api.posts(), cid) >= 10:
+                if occupied(api.posts(), cid) >= target:
                     raise RuntimeError('Queue filled during run; partial pair retained')
                 entry['channels'][service] = {'status': 'pending', 'payload': body}
                 ledger.save()  # Failure here prevents the mutation.

@@ -18,13 +18,13 @@
 - `data/publication-ledger.json`: permanent scheduling and delivery history. CSV `publish_status` is not changed when scheduling succeeds.
 - `.github/workflows/social-dry-run.yml`: existing daily/manual preview.
 - `.github/workflows/buffer-test.yml`: existing manual, read-only channel discovery.
-- `.github/workflows/buffer-refill.yml`: tests plus gated publishing. Every six hours after explicit activation, reconcile Buffer and refill up to 10 posts per channel.
+- `.github/workflows/buffer-refill.yml`: tests plus gated publishing. Every six hours after explicit activation, reconcile Buffer and refill up to nine evergreen posts per channel, reserving one newsletter slot.
 
 ## Calendar and content preservation
 
 The existing calendar is retained: M/W/F newsletter reservations; Tuesday/Saturday memes; Thursday/Sunday statistics. Refill reads the live Buffer schedule and timezone for each channel and uses the first available slot for the appropriate day, at least 15 minutes ahead. It schedules after existing queued content, preserving order. Missed days are not backfilled. The two channels may post at different times, matching their existing schedules.
 
-Image posts strictly alternate meme/statistic, starting with a meme. If the next category has no approved content, refill stops rather than sending consecutive statistics. All 61 assets now have user approval; scheduling remains disabled until deployment and activation. Newsletter slots are reserved and reported but not queued: no approved newsletter graphic/template exists. The original preview continues to inspect the RSS feed.
+Image posts strictly alternate meme/statistic, starting with a meme. If the next category has no approved content, refill stops rather than sending consecutive statistics. All 61 assets now have user approval; scheduling remains disabled until deployment and activation. Newsletter posts are handled by a local Codex automation on M/W/F at 11:30 a.m. Toronto time, with fallback checks at 12:30 and 1:30. It uses the approved graphic template, same-day RSS content, and Buffer MCP; it requires the Mac awake and Codex running. See `automation/NEWSLETTER_RUNBOOK.md`. The existing preview still flags its own newsletter output as requiring a graphic because generation occurs in Codex, not in the preview script.
 
 Both CSV and asset-audit approval status must allow an item. Supplied captions, Unicode, hashtags, alt text and image URLs are retained. A blank Facebook caption falls back to the Instagram caption plus any missing hashtag block; no automatic wording, branding or signup-link rewrite is applied. Approve platform-specific wording in `facebook_caption` if desired.
 
@@ -40,3 +40,7 @@ python3 automation/plan.py --offline --days 7
 `--remote-images` downloads public images to verify checksums; it never accesses Buffer. `--connected` additionally reads Buffer and prints proposed scheduling actions without any Buffer or GitHub writes. It requires an API key in the process environment; GitHub secrets are not available locally. Do not paste keys into the repository, command line or chat.
 
 See [NEXT_STEP_README.md](NEXT_STEP_README.md) for verification results, activation and failure recovery.
+
+## Newsletter automation
+
+The recurring Codex automation begins Monday, November 16, 2026. `automation/newsletter.py` validates same-day issues and manages durable pending/accepted/sent channel checkpoints in date-specific manifests. The built-in ImageGen tool generates the approved visual style; no new API key is required. The existing GitHub workflow reserves one queue slot by targeting nine pending evergreen posts per channel. Existing queued posts are preserved. Disabling repository variable `PUBLISHING_ENABLED` stops both automated creation paths.

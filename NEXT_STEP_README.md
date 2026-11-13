@@ -39,3 +39,7 @@ Open the failed Actions run, ledger and Buffer. Do not retry a `pending` entry b
 HTTP/auth/rate-limit failures and GraphQL/typed errors fail the run without logging tokens or raw API bodies. No mutation is automatically retried. Fix the cause, reconcile the ledger, then rerun. Library validation/checksum failures require reviewing the actual image change before refreshing audit metadata.
 
 Official payload references: [image posts](https://developers.buffer.com/examples/create-image-post.html), [scheduled posts](https://developers.buffer.com/examples/create-scheduled-post.html), [GraphQL reference](https://developers.buffer.com/reference.html).
+
+## November 13 newsletter automation update
+
+Newsletter publishing is now configured through the local Codex heartbeat `morning-mully-newsletter-publishing`, beginning Monday November 16 at 11:30 a.m. Toronto time, with checks at 12:30 and 1:30 if needed. It follows `automation/NEWSLETTER_RUNBOOK.md` and the approved faces-version template. This supersedes the earlier newsletter-graphic blocker above. The Mac must remain awake with Codex running for these image-generation and MCP publishing runs. No new key is required. All 25 tests pass, including stale/future issue rejection, issue-host validation, durable channel intents and nine-post evergreen capacity. Today's saved sent records were recognized correctly in the offline replay, so no duplicate graphic or Buffer post was created.

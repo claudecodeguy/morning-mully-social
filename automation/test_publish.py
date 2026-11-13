@@ -44,8 +44,13 @@ class PublishingTests(unittest.TestCase):
 
     def run_refill(self, live=True):
         # Simulate user approvals without altering the actual library.
-        with patch.object(plan, 'eligible', return_value=True):
+        with patch.object(plan, 'eligible', return_value=True), patch.dict(plan.CONFIG, {'evergreen_queue_target': 10}):
             return publish.refill(self.api, self.ledger, self.records, self.now, live)
+
+    def test_newsletter_capacity_is_reserved(self):
+        with patch.dict(plan.CONFIG, {"evergreen_queue_target": 9}):
+            publish.refill(self.api, self.ledger, self.records, self.now, True)
+        self.assertEqual(len(self.api.writes), 18)
 
     def test_all_assets_and_urls(self):
         self.assertEqual(len(self.records),61)

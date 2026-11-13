@@ -5,7 +5,13 @@
   "instagram_channel_id": "6af61a2f62b70b94b00da2ab",
   "facebook_channel_id": "6af7463d62b70b94b01dd7b0",
   "calendar": {
-    "Monday": "newsletter", "Tuesday": "meme", "Wednesday": "newsletter",
-    "Thursday": "stat", "Friday": "newsletter", "Saturday": "meme", "Sunday": "stat"
-  }
+    "Monday": "newsletter",
+    "Tuesday": "meme",
+    "Wednesday": "newsletter",
+    "Thursday": "stat",
+    "Friday": "newsletter",
+    "Saturday": "meme",
+    "Sunday": "stat"
+  },
+  "evergreen_queue_target": 9
 }

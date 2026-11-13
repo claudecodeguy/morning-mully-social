@@ -1,0 +1,65 @@
+name: Morning Mully - Buffer refill (activation gated)
+on:
+  workflow_dispatch:
+    inputs:
+      live:
+        description: 'Schedule real posts (requires repository activation variable)'
+        type: boolean
+        default: false
+      connected_check:
+        description: 'Read Buffer queues and preview refill; never creates posts'
+        type: boolean
+        default: false
+  schedule:
+    - cron: '15 */6 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: morning-mully-buffer-writer
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline tests and library audit
+        run: |
+          python3 -m unittest discover -s automation -p 'test_*.py' -v
+          python3 automation/publish.py
+      - name: Read-only connected preflight
+        if: github.event_name == 'workflow_dispatch' && inputs.connected_check == true && inputs.live != true
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: python3 automation/publish.py --connected --remote-images >> "$GITHUB_STEP_SUMMARY"
+  refill:
+    needs: verify
+    # Unset by default. Pushing this workflow alone cannot create posts.
+    if: >-
+      github.ref == 'refs/heads/main' && vars.PUBLISHING_ENABLED == 'true' &&
+      (github.event_name == 'schedule' || inputs.live == true)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reconcile delivery and refill both channels
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+          PUBLISHING_ENABLED: ${{ vars.PUBLISHING_ENABLED }}
+        run: python3 automation/publish.py --live >> "$GITHUB_STEP_SUMMARY"
+      - name: Explain failure
+        if: failure()
+        run: |
+          echo '::error::Buffer refill stopped. Review logs and data/publication-ledger.json. Do not clear pending intents or retry uncertain writes without checking Buffer.'
+          echo 'Refill failed. Inspect the ledger and Buffer before retrying. GitHub Actions notification settings control email/web alerts.' >> "$GITHUB_STEP_SUMMARY"

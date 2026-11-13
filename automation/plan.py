@@ -3,7 +3,6 @@
 import argparse
 import csv
 import json
-import re
 import sys
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -15,7 +14,6 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = json.loads((Path(__file__).parent / "settings.json").read_text())
 APPROVED = {"APPROVED", "READY_AS_SUPPLIED"}
-FACEBOOK_SIGNUP = "https://www.greenfeetracker.com/newsletter?utm_source=facebook&utm_medium=social"
 
 
 def rows(filename):
@@ -24,7 +22,10 @@ def rows(filename):
 
 
 def eligible(row):
-    return row.get("approval_status") in APPROVED and row.get("publish_status") == "UNPUBLISHED"
+    audit = {r["post_id"]: r for r in rows("asset_audit.csv")}
+    return (row.get("approval_status") in APPROVED
+            and audit.get(row["post_id"], {}).get("approval_status") in APPROVED
+            and row.get("publish_status") == "UNPUBLISHED")
 
 
 def image_url(row):
@@ -44,9 +45,8 @@ def make_captions(row):
     fb = (row.get("facebook_caption") or "").strip()
     if not fb:
         fb = (row.get("instagram_caption") or "").strip()
-        fb = re.sub(r"(?i)(?:free morning mully newsletter )?(?:at the )?(?:link )?in bio\.?", "", fb).strip()
-        fb = re.sub(r"(?m)^\s*(?:#\w+\s*){2,}$", "", fb).strip()
-        fb += "\n\nGet Morning Mully free: " + FACEBOOK_SIGNUP
+    if tags and tags not in fb:
+        fb += "\n\n" + tags
     return {"instagram": ig, "facebook": fb}
 
 

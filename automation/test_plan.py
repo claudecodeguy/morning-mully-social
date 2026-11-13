@@ -9,19 +9,19 @@ import plan
 
 
 class SchedulerTests(unittest.TestCase):
-    def test_library_counts_and_approval_holds(self):
+    def test_library_counts_and_user_approvals(self):
         memes = plan.rows("memes.csv")
         stats = plan.rows("statistics.csv")
         self.assertEqual(len(memes), 31)
         self.assertEqual(len(stats), 30)
-        self.assertEqual(sum(plan.eligible(x) for x in memes), 0)
-        self.assertEqual(sum(plan.eligible(x) for x in stats), 20)
+        self.assertEqual(sum(plan.eligible(x) for x in memes), 31)
+        self.assertEqual(sum(plan.eligible(x) for x in stats), 30)
 
-    def test_weekend_respects_holds(self):
+    def test_weekend_uses_approved_content(self):
         items = plan.create_plan(date(2026, 11, 14), 2, [], "Offline test")
         self.assertEqual(items[0]["type"], "meme")
-        self.assertEqual(items[0]["status"], "BLOCKED_APPROVAL")
-        self.assertEqual(items[1]["post_id"], "S011")
+        self.assertEqual(items[0]["status"], "READY_FOR_REVIEW")
+        self.assertEqual(items[1]["post_id"], "S001")
         self.assertEqual(items[1]["status"], "READY_FOR_REVIEW")
 
     def test_no_duplicate_stats_in_preview(self):
@@ -46,11 +46,10 @@ class SchedulerTests(unittest.TestCase):
         self.assertNotIn("createPost(", source)
         self.assertNotIn("BUFFER_API_KEY", source)
 
-    def test_facebook_has_direct_link(self):
+    def test_facebook_preserves_approved_caption_and_tags(self):
         row = plan.rows("statistics.csv")[10]
         fb = plan.make_captions(row)["facebook"]
-        self.assertIn("https://www.greenfeetracker.com/newsletter", fb)
-        self.assertNotIn("link in bio", fb.lower())
+        self.assertEqual(fb, plan.make_captions(row)["instagram"])
 
 
 if __name__ == "__main__":

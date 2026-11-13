@@ -1,36 +1,42 @@
 # Morning Mully social content library
 
-This repository structure was prepared from the 31 meme images, 30 statistics images and their two spreadsheets received November 13, 2026.
+61 image posts: 31 memes and 30 statistics. Original XLSX planners and caption CSVs are preserved. GitHub Pages serves the JPEG files at `https://claudecodeguy.github.io/morning-mully-social/`.
 
-## Files
+## Current status
 
-- `images/memes/M001.jpg`–`M031.jpg`: 31 social meme images.
-- `images/statistics/S001.jpg`–`S030.jpg`: 30 social statistics graphics.
-- `data/memes.csv`: original meme captions, hashtags, alt text and approval status.
-- `data/statistics.csv`: original statistics captions, hashtags, alt text, source URLs and approval status.
-- `data/asset_audit.csv`: exact source-image mapping, dimensions, checksum and review status.
-- `index.html`: GitHub Pages hosting entry page.
+- All 61 CSV IDs map to unique existing JPEGs and public URLs. All hosted image bytes were verified against the current local files on November 13, 2026.
+- The user explicitly approved all 31 memes and 30 statistics on November 13, 2026. Both caption CSVs and the asset audit now record `APPROVED`.
+- S001–S030 were previously `READY_AS_SUPPLIED` in the statistics CSV. S001–S010 were replaced in commit `1c91b8b` with 1080×1350 Morning Mully graphics, followed by the CSV update in `389295a`. The former README and asset audit were stale; the audit now reflects those replacement files. Statistics have not been independently fact-checked.
+- All image files and caption text are unchanged. Only approval fields were updated in the caption CSVs; audit metadata for S001–S010 was also refreshed.
+- Both configured Buffer channels were confirmed connected through read-only MCP checks: Instagram `morningmully` and Facebook `Morning Mully`. Neither had queued posts; one unrelated Facebook post was already sent.
+- **Publishing remains disabled: repository variable `PUBLISHING_ENABLED=false`. No posts have been created in Buffer by this automation.**
 
-Published-image file conversion is **JPEG re-encoding only**; no cropping, logo replacement or copy edits occurred. The original PNG ZIPs remain as the user's source files.
+## Components
 
-## Approval and content warnings
+- `automation/plan.py`: existing seven-day, read-only preview with RSS support; no Buffer access.
+- `automation/publish.py`: validated library loader, Buffer GraphQL client, paired-channel refill, durable intent ledger, delivery reconciliation and disabled-by-default CLI.
+- `data/publication-ledger.json`: permanent scheduling and delivery history. CSV `publish_status` is not changed when scheduling succeeds.
+- `.github/workflows/social-dry-run.yml`: existing daily/manual preview.
+- `.github/workflows/buffer-test.yml`: existing manual, read-only channel discovery.
+- `.github/workflows/buffer-refill.yml`: tests plus gated publishing. Every six hours after explicit activation, reconcile Buffer and refill up to 10 posts per channel.
 
-- **M001–M031**: `NEEDS_CREATIVE_REVIEW` because the supplied spreadsheet explicitly calls for human review.
-- **S001–S010**: `HOLD_REBRAND_AND_RATIO`; the original files display GreenFeeTracker branding and are taller than the standard Instagram 4:5 feed format. Do not schedule until a branded 4:5 version is approved.
-- **S011–S030**: `READY_AS_SUPPLIED` based on the user's spreadsheet; the original statistics were *not independently fact-checked as part of this file-organization pass*.
-- Every item starts with `publish_status=UNPUBLISHED`. No Buffer credentials or live workflows are included.
-- `facebook_caption` is intentionally empty for all rows; prepare Facebook-specific captions during the publishing automation phase.
+## Calendar and content preservation
 
-## GitHub Pages image URL
+The existing calendar is retained: M/W/F newsletter reservations; Tuesday/Saturday memes; Thursday/Sunday statistics. Refill reads the live Buffer schedule and timezone for each channel and uses the first available slot for the appropriate day, at least 15 minutes ahead. It schedules after existing queued content, preserving order. Missed days are not backfilled. The two channels may post at different times, matching their existing schedules.
 
-For example, if Pages is configured for `https://claudecodeguy.github.io/morning-mully-social/`, M001 should be accessible as:
+Image posts strictly alternate meme/statistic, starting with a meme. If the next category has no approved content, refill stops rather than sending consecutive statistics. All 61 assets now have user approval; scheduling remains disabled until deployment and activation. Newsletter slots are reserved and reported but not queued: no approved newsletter graphic/template exists. The original preview continues to inspect the RSS feed.
 
-`https://claudecodeguy.github.io/morning-mully-social/images/memes/M001.jpg`
+Both CSV and asset-audit approval status must allow an item. Supplied captions, Unicode, hashtags, alt text and image URLs are retained. A blank Facebook caption falls back to the Instagram caption plus any missing hashtag block; no automatic wording, branding or signup-link rewrite is applied. Approve platform-specific wording in `facebook_caption` if desired.
 
-After upload, go to **Settings → Pages**, choose **Deploy from a branch**, `main`, `/ (root)`.
+## Local checks (no publishing)
 
-## Publishing development contract
+```sh
+python3 -m unittest discover -s automation -p 'test_*.py' -v
+python3 automation/publish.py
+python3 automation/publish.py --remote-images
+python3 automation/plan.py --offline --days 7
+```
 
-Build a dry-run-first GitHub Actions scheduler that reads these two CSVs, checks `approval_status`, and queues only approved content through Buffer (separate channel calls for IG and FB). Use the Beehiiv RSS feed `https://rss.beehiiv.com/feeds/eDs7x5FU1F.xml` for Monday/Wednesday/Friday newsletter posts.
+`--remote-images` downloads public images to verify checksums; it never accesses Buffer. `--connected` additionally reads Buffer and prints proposed scheduling actions without any Buffer or GitHub writes. It requires an API key in the process environment; GitHub secrets are not available locally. Do not paste keys into the repository, command line or chat.
 
-Important: Don't alter rows or mark items published merely because Buffer accepted a scheduling request; store channel IDs and verify actual post completion. Do not require Supabase or additional paid services.
+See [NEXT_STEP_README.md](NEXT_STEP_README.md) for verification results, activation and failure recovery.

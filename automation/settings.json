@@ -1,0 +1,11 @@
+{
+  "feed_url": "https://rss.beehiiv.com/feeds/eDs7x5FU1F.xml",
+  "pages_base_url": "https://claudecodeguy.github.io/morning-mully-social/",
+  "timezone": "America/New_York",
+  "instagram_channel_id": "6af61a2f62b70b94b00da2ab",
+  "facebook_channel_id": "6af7463d62b70b94b01dd7b0",
+  "calendar": {
+    "Monday": "newsletter", "Tuesday": "meme", "Wednesday": "newsletter",
+    "Thursday": "stat", "Friday": "newsletter", "Saturday": "meme", "Sunday": "stat"
+  }
+}

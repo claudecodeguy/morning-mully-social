@@ -567,6 +567,42 @@
           }
         }
       }
+    },
+    {
+      "post_id": "S005",
+      "kind": "stat",
+      "due": {
+        "instagram": "2026-11-30T03:36:00+00:00",
+        "facebook": "2026-11-29T15:24:00+00:00"
+      },
+      "channels": {
+        "instagram": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af61a2f62b70b94b00da2ab",
+            "text": "Five starts. Five wins. One record-tying run. Nelly Korda's 2024 streak matched the LPGA mark shared by Nancy Lopez and Annika S\u00f6renstam. The fifth win was a major at the Chevron Championship. Free Morning Mully newsletter in bio.\n\n#NellyKorda #LPGATour #WomensGolf #GolfStats #Golf",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-30T03:36:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/statistics/S005.jpg",
+                  "metadata": {
+                    "altText": "Morning Mully graphic showing that Nelly Korda won five consecutive LPGA starts in 2024, tying the tour record."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "instagram": {
+                "type": "post",
+                "shouldShareToFeed": true
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

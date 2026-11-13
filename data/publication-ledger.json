@@ -539,6 +539,31 @@
               }
             }
           }
+        },
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "Four hours away from everyone, fresh air, and a score we don't discuss. It's self-care.\n\nWhat's the most ridiculous way you've justified a golf trip?\n\n#GolfTherapy #GolfTrip #GolfLife #GolfHumor #GolfMemes",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-28T12:31:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/memes/M005.jpg",
+                  "metadata": {
+                    "altText": "Mustached man makes a serious hand gesture while a caption calls a weekend golf trip self-care."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "post"
+              }
+            }
+          }
         }
       }
     }

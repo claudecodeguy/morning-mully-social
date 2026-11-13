@@ -224,6 +224,31 @@
               }
             }
           }
+        },
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "Seven runner-ups. Then a six-shot breakthrough. Cameron Young's first PGA TOUR victory came at the 2025 Wyndham Championship, where he separated from the field by six strokes. The drought ended with no doubt attached. Free Morning Mully newsletter in bio.\n\n#CameronYoung #WyndhamChampionship #PGATour #GolfStats #Golf",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-19T14:59:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/statistics/S002.jpg",
+                  "metadata": {
+                    "altText": "Morning Mully graphic about Cameron Young winning the 2025 Wyndham Championship by six shots after recording seven PGA TOUR runner-up finishes without a win."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "post"
+              }
+            }
+          }
         }
       }
     }

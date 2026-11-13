@@ -1,0 +1,60 @@
+
+name: Test Buffer Connection
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Identify connected channels
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          token = os.environ.get("BUFFER_API_KEY")
+          if not token:
+              raise RuntimeError("BUFFER_API_KEY is missing")
+
+          def query(graphql):
+              request = urllib.request.Request(
+                  "https://api.buffer.com",
+                  data=json.dumps({"query": graphql}).encode(),
+                  headers={
+                      "Authorization": f"Bearer {token}",
+                      "Content-Type": "application/json"
+                  }
+              )
+              with urllib.request.urlopen(request) as r:
+                  result = json.load(r)
+              if result.get("errors"):
+                  raise RuntimeError(str(result["errors"]))
+              return result["data"]
+
+          account = query(
+              "{ account { organizations { id name } } }"
+          )
+
+          for org in account["account"]["organizations"]:
+              org_id = json.dumps(org["id"])
+              channels = query(
+                  "{ channels(input: { organizationId: "
+                  + org_id +
+                  " }) { id name displayName service } }"
+              )
+
+              for channel in channels["channels"]:
+                  if channel["service"].lower() in (
+                      "instagram", "facebook"
+                  ):
+                      print(
+                          channel["service"],
+                          channel["displayName"] or channel["name"],
+                          "CHANNEL_ID:", channel["id"]
+                      )
+          PY

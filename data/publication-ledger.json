@@ -1,4 +1,41 @@
 {
   "version": 1,
-  "entries": []
+  "entries": [
+    {
+      "post_id": "M001",
+      "kind": "meme",
+      "due": {
+        "instagram": "2026-11-15T03:25:00+00:00",
+        "facebook": "2026-11-14T12:31:00+00:00"
+      },
+      "channels": {
+        "instagram": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af61a2f62b70b94b00da2ab",
+            "text": "One double bogey and suddenly this relaxing hobby is a personal attack.\n\nWhich hole usually ends the positive attitude?\n\n#GolfMemes #GolfHumor #WeekendGolfer #GolfRage #GolfLife",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-15T03:25:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/memes/M001.jpg",
+                  "metadata": {
+                    "altText": "A furious weekend golfer reacts dramatically after a bad early hole, with a joke about going from relaxed to angry."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "instagram": {
+                "type": "post",
+                "shouldShareToFeed": true
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }

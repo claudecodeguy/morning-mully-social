@@ -1,0 +1,43 @@
+name: Morning Mully - Social content dry run
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: "Optional start date YYYY-MM-DD (default today Eastern)"
+        required: false
+        type: string
+  schedule:
+    - cron: "15 16 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out content library
+        uses: actions/checkout@v4
+
+      - name: Run scheduler safety tests
+        run: python3 -m unittest discover -s automation -p "test_*.py" -v
+
+      - name: Preview next seven days (no Buffer access)
+        env:
+          START_DATE: ${{ inputs.start_date }}
+        run: |
+          if [ -n "$START_DATE" ]; then
+            python3 automation/plan.py --date "$START_DATE" --days 7 --output-dir "$RUNNER_TEMP/mm-preview"
+          else
+            python3 automation/plan.py --days 7 --output-dir "$RUNNER_TEMP/mm-preview"
+          fi
+          cat "$RUNNER_TEMP/mm-preview/preview.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Save preview report
+        uses: actions/upload-artifact@v4
+        with:
+          name: morning-mully-social-dry-run
+          path: ${{ runner.temp }}/mm-preview/
+          retention-days: 7

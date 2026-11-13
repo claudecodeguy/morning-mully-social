@@ -350,6 +350,31 @@
               }
             }
           }
+        },
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "From college golf to the Ryder Cup before his first major start. Ludvig \u00c5berg turned professional in June 2023 and made history for Team Europe that September as the first player to appear in a Ryder Cup before playing a major championship. Free Morning Mully newsletter in bio.\n\n#LudvigAberg #RyderCup #TeamEurope #GolfHistory #Golf",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-22T15:24:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/statistics/S003.jpg",
+                  "metadata": {
+                    "altText": "Morning Mully golf statistic graphic explaining that Ludvig \u00c5berg became the first player to compete in the Ryder Cup before making a major championship appearance."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "post"
+              }
+            }
+          }
         }
       }
     }

@@ -413,6 +413,31 @@
               }
             }
           }
+        },
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "Forty-eight hours before a golf trip, the group chat becomes a full-time job. None of us planned our weddings this carefully.\n\nWho's the organizer in your foursome?\n\n#GolfTrip #GolfBuddies #GolfMemes #GolfHumor #GolfLife",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-24T13:18:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/memes/M004.jpg",
+                  "metadata": {
+                    "altText": "Frantic man studies a complicated planning board alongside a golf trip checklist."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "post"
+              }
+            }
+          }
         }
       }
     }

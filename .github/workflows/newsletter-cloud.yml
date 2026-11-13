@@ -1,0 +1,66 @@
+name: Morning Mully - Cloud newsletter
+on:
+  workflow_dispatch:
+    inputs:
+      live:
+        description: 'Publish today’s issue (false runs a read-only preview)'
+        type: boolean
+        default: false
+  schedule:
+    # Covers 11:30–18:30 Toronto across daylight saving; Python checks local time.
+    - cron: '30 15-23 * * 1,3,5'
+permissions:
+  contents: read
+concurrency:
+  group: morning-mully-buffer-writer
+  cancel-in-progress: false
+jobs:
+  newsletter:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install deterministic graphic renderer
+        run: python3 -m pip install -r automation/requirements.txt
+      - name: Run safety tests
+        run: python3 -m unittest discover -s automation -p 'test_*.py' -v
+      - name: Preview or publish today's newsletter
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+          PUBLISHING_ENABLED: ${{ vars.PUBLISHING_ENABLED }}
+          LIVE_REQUESTED: ${{ github.event_name == 'schedule' || inputs.live == true }}
+        run: |
+          if [ "$LIVE_REQUESTED" = true ] && [ "$PUBLISHING_ENABLED" = true ]; then
+            python3 automation/cloud_newsletter.py --live >> "$GITHUB_STEP_SUMMARY"
+          else
+            python3 automation/cloud_newsletter.py >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Save preview and generated cover
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloud-newsletter-preview
+          path: reports/cloud-newsletter/
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Record actionable failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = 'Newsletter publishing needs attention';
+            const {data: issues} = await github.rest.issues.listForRepo({...context.repo, state:'open', creator:'github-actions[bot]', per_page:100});
+            if (!issues.some(i => i.title === title)) {
+              await github.rest.issues.create({...context.repo, title,
+                body:`Cloud newsletter run failed: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}\n\nCheck the date-specific publication manifest and Buffer before retrying. Pending intents are never blindly resent. Later hourly runs can recover transient failures. Close this issue after resolving the failure.`});
+            }

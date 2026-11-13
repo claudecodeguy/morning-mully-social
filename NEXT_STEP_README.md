@@ -43,3 +43,7 @@ Official payload references: [image posts](https://developers.buffer.com/example
 ## November 13 newsletter automation update
 
 Newsletter publishing is now configured through the local Codex heartbeat `morning-mully-newsletter-publishing`, beginning Monday November 16 at 11:30 a.m. Toronto time, with checks at 12:30 and 1:30 if needed. It follows `automation/NEWSLETTER_RUNBOOK.md` and the approved faces-version template. This supersedes the earlier newsletter-graphic blocker above. The Mac must remain awake with Codex running for these image-generation and MCP publishing runs. No new key is required. All 25 tests pass, including stale/future issue rejection, issue-host validation, durable channel intents and nine-post evergreen capacity. Today's saved sent records were recognized correctly in the offline replay, so no duplicate graphic or Buffer post was created.
+
+## Cloud migration — supersedes the local automation update
+
+Newsletter creation now runs in GitHub Actions with hourly M/W/F retries and a separate delivery watchdog. No Mac or new AI key is required. The local heartbeat is PAUSED. The cover renderer uses same-day issue artwork and a fully local branded fallback if remote images fail. Date-specific publication records, durable intents and the shared publisher lock are preserved. See `automation/CLOUD_NEWSLETTER.md` for limitations, alerts and recovery.

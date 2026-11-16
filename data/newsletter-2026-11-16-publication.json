@@ -2,7 +2,7 @@
   "issue_date": "2026-11-16",
   "channels": {
     "instagram": {
-      "status": "accepted",
+      "status": "sent",
       "payload": {
         "channelId": "6af61a2f62b70b94b00da2ab",
         "mode": "shareNow",
@@ -25,7 +25,8 @@
           }
         }
       },
-      "buffer_id": "6afb965a85dca6b14a09936e"
+      "buffer_id": "6afb965a85dca6b14a09936e",
+      "sent_at": "2026-11-16T18:48:51.803277-05:00"
     }
   },
   "issue_url": "https://morningmully.beehiiv.com/p/rory-ties-monty-with-an-eighth-dubai-title",

@@ -665,6 +665,31 @@
               }
             }
           }
+        },
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "My scorecard is a thing of beauty, provided nobody explains what par means.\n\nWhat's the most optimistic way you've described a 9-hole score?\n\n#GolfScorecard #GolfMemes #WeekendGolfer #GolfHumor #GolfLife",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-12-01T13:18:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/memes/M006.jpg",
+                  "metadata": {
+                    "altText": "Close-up of a golf scorecard showing a high score with a joke about not understanding par."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "post"
+              }
+            }
+          }
         }
       }
     }

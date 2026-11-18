@@ -728,6 +728,31 @@
               }
             }
           }
+        },
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "Eleven years between majors. One green jacket to finish the set. Rory McIlroy won the 2025 Masters nearly 11 years after his 2014 PGA Championship and became the sixth man to complete the career Grand Slam. Free Morning Mully newsletter in bio.\n\n#RoryMcIlroy #TheMasters #CareerGrandSlam #GolfHistory #Golf",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-12-03T14:59:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/statistics/S006.jpg",
+                  "metadata": {
+                    "altText": "Morning Mully graphic about Rory McIlroy ending an 11-year major drought at the 2025 Masters and completing the career Grand Slam."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "post"
+              }
+            }
+          }
         }
       }
     }

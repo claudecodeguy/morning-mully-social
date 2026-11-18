@@ -2,7 +2,7 @@
   "issue_date": "2026-11-18",
   "channels": {
     "instagram": {
-      "status": "pending",
+      "status": "accepted",
       "payload": {
         "channelId": "6af61a2f62b70b94b00da2ab",
         "mode": "shareNow",
@@ -24,7 +24,8 @@
             "shouldShareToFeed": true
           }
         }
-      }
+      },
+      "buffer_id": "6afe2937ebd4409dc9fe6cb7"
     }
   },
   "issue_url": "https://morningmully.beehiiv.com/p/tiger-is-back-hero-world-challenge-dec-3",

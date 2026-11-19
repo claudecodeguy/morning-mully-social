@@ -756,6 +756,42 @@
           }
         }
       }
+    },
+    {
+      "post_id": "M007",
+      "kind": "meme",
+      "due": {
+        "instagram": "2026-12-06T03:25:00+00:00",
+        "facebook": "2026-12-05T12:31:00+00:00"
+      },
+      "channels": {
+        "instagram": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af61a2f62b70b94b00da2ab",
+            "text": "6:30 a.m. tee time. Back before the kids notice. That's the plan, anyway.\n\nWhat time does your 'quick round' become a family incident?\n\n#GolfDad #GolfMemes #EarlyTeeTime #GolfHumor #WeekendGolfer",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-12-06T03:25:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/memes/M007.jpg",
+                  "metadata": {
+                    "altText": "Office-comedy manager smirks while the meme jokes about an early tee time before parenting duties."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "instagram": {
+                "type": "post",
+                "shouldShareToFeed": true
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

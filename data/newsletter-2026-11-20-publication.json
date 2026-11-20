@@ -29,7 +29,7 @@
       "sent_at": "2026-11-20T17:18:50.246163-05:00"
     },
     "facebook": {
-      "status": "pending",
+      "status": "accepted",
       "payload": {
         "channelId": "6af7463d62b70b94b01dd7b0",
         "mode": "shareNow",
@@ -50,7 +50,8 @@
             "type": "post"
           }
         }
-      }
+      },
+      "buffer_id": "6b00c74c5e993799d831d126"
     }
   },
   "issue_url": "https://morningmully.beehiiv.com/p/waves-crash-onto-pebble-beach-s-7th-green",

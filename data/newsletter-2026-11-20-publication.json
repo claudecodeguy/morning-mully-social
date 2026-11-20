@@ -27,6 +27,30 @@
       },
       "buffer_id": "6b00c740dd205ed7799e2469",
       "sent_at": "2026-11-20T17:18:50.246163-05:00"
+    },
+    "facebook": {
+      "status": "pending",
+      "payload": {
+        "channelId": "6af7463d62b70b94b01dd7b0",
+        "mode": "shareNow",
+        "schedulingType": "automatic",
+        "text": "Today's Morning Mully is out.\n\nWaves crash onto Pebble Beach's 7th green\n\nGolf news, a few laughs, and something to send your foursome.\n\nRead today’s issue: https://morningmully.beehiiv.com/p/waves-crash-onto-pebble-beach-s-7th-green?utm_source=facebook&utm_medium=social&utm_campaign=newsletter_2026-11-20\n\n#MorningMully #GolfNews #WeekendGolfer #GolfLife #Golf",
+        "assets": [
+          {
+            "image": {
+              "url": "https://raw.githubusercontent.com/claudecodeguy/morning-mully-social/c68d788adc9a59cdc42bd65215ce9a638f2b28ee/assets/newsletters/2026-11-20-cloud.png",
+              "metadata": {
+                "altText": "Morning Mully newsletter: Waves crash onto Pebble Beach's 7th green"
+              }
+            }
+          }
+        ],
+        "metadata": {
+          "facebook": {
+            "type": "post"
+          }
+        }
+      }
     }
   },
   "issue_url": "https://morningmully.beehiiv.com/p/waves-crash-onto-pebble-beach-s-7th-green",

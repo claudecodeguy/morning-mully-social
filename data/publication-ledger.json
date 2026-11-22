@@ -854,6 +854,31 @@
               }
             }
           }
+        },
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "Scottie finished outside the top 10 only three times all season. In 2024 he posted 16 top-10s in 19 PGA TOUR starts, an 84.2% rate, and missed zero cuts. Dominance can look boring when it happens every week. Free Morning Mully newsletter in bio.\n\n#ScottieScheffler #PGATour #GolfStats #GolfData #Golf",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-12-06T15:24:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/statistics/S007.jpg",
+                  "metadata": {
+                    "altText": "Morning Mully graphic showing Scottie Scheffler recorded 16 top-10 finishes in 19 PGA TOUR starts in 2024, an 84 percent rate, with no missed cuts."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "post"
+              }
+            }
+          }
         }
       }
     }

@@ -882,6 +882,42 @@
           }
         }
       }
+    },
+    {
+      "post_id": "M008",
+      "kind": "meme",
+      "due": {
+        "instagram": "2026-12-09T00:51:00+00:00",
+        "facebook": "2026-12-08T13:18:00+00:00"
+      },
+      "channels": {
+        "instagram": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af61a2f62b70b94b00da2ab",
+            "text": "'I just play for the exercise,' she says, before beating the whole foursome by 20 shots.\n\nWho's the suspiciously good 'casual' golfer in your group?\n\n#WomenWhoGolf #GolfMemes #GolfHumor #GolfLife #GolfSwing",
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-12-09T00:51:00+00:00",
+            "assets": [
+              {
+                "image": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/images/memes/M008.jpg",
+                  "metadata": {
+                    "altText": "Smiling woman golfer in a visor with a caption about playing for exercise while shooting 74."
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "instagram": {
+                "type": "post",
+                "shouldShareToFeed": true
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -26,15 +26,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install existing newsletter test dependencies
+        run: python3 -m pip install -r automation/requirements.txt
       - name: Offline tests and library audit
         run: |
           python3 -m unittest discover -s automation -p 'test_*.py' -v
           python3 automation/publish.py
+          python3 automation/video_library.py verify
       - name: Read-only connected preflight
         if: github.event_name == 'workflow_dispatch' && inputs.connected_check == true && inputs.live != true
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
-        run: python3 automation/publish.py --connected --remote-images >> "$GITHUB_STEP_SUMMARY"
+        run: python3 automation/publish.py --connected --video-preview --remote-images >> "$GITHUB_STEP_SUMMARY"
   refill:
     needs: verify
     # Unset by default. Pushing this workflow alone cannot create posts.
@@ -57,6 +60,7 @@ jobs:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           GITHUB_TOKEN: ${{ github.token }}
           PUBLISHING_ENABLED: ${{ vars.PUBLISHING_ENABLED }}
+          VIDEO_PUBLISHING_ENABLED: ${{ vars.VIDEO_PUBLISHING_ENABLED }}
         run: python3 automation/publish.py --live >> "$GITHUB_STEP_SUMMARY"
       - name: Explain failure
         if: failure()

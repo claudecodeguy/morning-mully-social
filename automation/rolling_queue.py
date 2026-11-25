@@ -32,7 +32,7 @@ def refill(api, ledger, images, videos, now, live=False):
         publish.reconcile(ledger, posts)
     elif any(r['status'] == 'pending' for e in ledger.data['entries'] for r in e['channels'].values()):
         raise RuntimeError('Uncertain intent; manual reconciliation required')
-    # Freeze migration boundary once. Never edit/delete existing Buffer posts.
+    # Preserve the image backlog boundary; videos can fill earlier unused slots.
     boundary = ledger.data.get('video_schedule_after')
     if boundary is None:
         boundary = max([now] + [publish.instant(p['dueAt']) for p in posts
@@ -101,10 +101,11 @@ def refill(api, ledger, images, videos, now, live=False):
             if not send(entry):
                 return log
     for n in range(15):
-        day = floor.astimezone(tz).date() + timedelta(days=n)
+        day = now.astimezone(tz).date() + timedelta(days=n)
         kind = plan.CONFIG['video_calendar'][day.strftime('%A')]
         if kind == 'newsletter':
             continue
+        slot_floor = now + timedelta(minutes=15) if kind == 'video' else floor
         services_for_kind = publish.ALL_CHANNELS if kind == 'video' else publish.CHANNELS
         dues = {}
         for service,cid in services_for_kind.items():
@@ -118,7 +119,7 @@ def refill(api, ledger, images, videos, now, live=False):
             # Respect occupied slots and separate videos from any scheduled newsletter by >= 2h.
             busy = [publish.instant(p['dueAt']) for p in posts if p['channelId'] == cid
                     and p.get('dueAt') and p['status'] != 'sent']
-            chosen = [t for t in candidates if t > floor and not any(abs(t-b) < timedelta(hours=2) for b in busy)]
+            chosen = [t for t in candidates if t > slot_floor and not any(abs(t-b) < timedelta(hours=2) for b in busy)]
             if chosen:
                 dues[service] = min(chosen).astimezone(timezone.utc).isoformat()
         if len(dues) != len(services_for_kind):

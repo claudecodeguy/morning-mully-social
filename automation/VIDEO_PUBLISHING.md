@@ -1,6 +1,6 @@
 # Morning Mully video publishing
 
-Video publishing is **disabled until owner approval**. This branch does not change Buffer posts, activate repository variables, or alter publication history. The existing meme/statistic refill and cloud newsletter continue to use their current paths until `VIDEO_PUBLISHING_ENABLED=true`.
+Owner approved all 14 initial videos and live activation on November 24, 2026. This branch does not change Buffer posts, activate repository variables, or alter publication history. The existing meme/statistic refill and cloud newsletter continue to use their current paths until `VIDEO_PUBLISHING_ENABLED=true`.
 
 ## Proposed weekly calendar
 
@@ -16,11 +16,11 @@ All dates use `America/Toronto`, including daylight saving changes.
 | Saturday | Video at 19:00 |
 | Sunday | Statistic, using existing Buffer channel times |
 
-Newsletters retain the existing same-day cloud workflow and its daytime delivery window. New videos use custom scheduled times, independent of Buffer's posting schedule. A video slot within two hours of an already queued post on any required channel is skipped. Existing Buffer posts are never moved or deleted. On first activation, the scheduler starts after the latest existing queued post and saves that boundary in the existing ledger. It scans a rolling 15-day horizon on each existing six-hour refill run.
+Newsletters retain the existing same-day cloud workflow and its daytime delivery window. New videos use custom scheduled times, independent of Buffer's posting schedule. A video slot within two hours of an already queued post on any required channel is skipped. Existing Buffer posts are never moved or deleted. Videos fill the next unoccupied Monday/Wednesday/Saturday evening slot, including slots before the existing backlog ends. New images retain the boundary after the latest existing queued post. Existing Buffer posts keep their dates. It scans a rolling 15-day horizon on each existing six-hour refill run.
 
 ## Library and captions
 
-`data/videos.csv` maps stable V-series IDs to the **unchanged original filenames**, GitHub Pages URLs and SHA256 checksums. It contains separate Instagram/Facebook captions, shared hashtags, YouTube title/description, approval status and review notes. All initial captions refer to verified on-screen text. No spoken dialogue has been transcribed or invented. All 14 entries await owner approval; review complete audio and any `ROUGH` edit before approving.
+`data/videos.csv` maps stable V-series IDs to the **unchanged original filenames**, GitHub Pages URLs and SHA256 checksums. It contains separate Instagram/Facebook captions, shared hashtags, YouTube title/description, approval status and review notes. All initial captions refer to verified on-screen text. No spoken dialogue has been transcribed or invented. All 14 initial entries are owner-approved, including audio and `ROUGH` final edits. Future uploads still require explicit approval.
 
 Videos use the existing GitHub Pages site at `https://claudecodeguy.github.io/morning-mully-social/videos/`. No new hosting service or subscription is needed. All 14 URLs were downloaded and checksum-verified during implementation. Format checks found portrait H.264 MP4s, 4.4–13.6 seconds long. New uploads must pass format checks before approval.
 

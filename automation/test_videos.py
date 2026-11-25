@@ -104,7 +104,22 @@ class VideoTests(unittest.TestCase):
         self.api.items=copy.deepcopy(original)
         self.run_queue()
         self.assertEqual(self.api.items[0],original[0])
-        self.assertTrue(all(publish.instant(b['dueAt'])>publish.instant(original[0]['dueAt']) for b in self.api.writes))
+        self.assertTrue(all(publish.instant(b['dueAt'])>publish.instant(original[0]['dueAt']) for b in self.api.writes if 'image' in b['assets'][0]))
+        video=self.api.writes[0]
+        self.assertIn('video',video['assets'][0])
+        self.assertEqual(video['dueAt'],'2026-12-01T00:00:00+00:00')
+
+    def test_first_video_can_fill_tomorrow_without_moving_existing_queue(self):
+        self.now=datetime(2026,11,25,1,tzinfo=timezone.utc)
+        self.api.items=[{'id':'future-'+str(i),'channelId':cid,'text':'existing',
+                        'status':'scheduled','dueAt':'2026-12-09T00:51:00Z'}
+                       for cid in publish.CHANNELS.values() for i in range(8)]
+        original=copy.deepcopy(self.api.items)
+        self.run_queue()
+        self.assertEqual(self.api.items[:16],original)
+        self.assertEqual(len(self.api.writes),3)
+        self.assertTrue(all(p['dueAt']=='2026-11-26T00:00:00+00:00' for p in self.api.writes))
+        self.assertEqual({p['channelId'] for p in self.api.writes},set(publish.ALL_CHANNELS.values()))
 
     def test_full_youtube_stops_video_without_touching_posts(self):
         self.api.items=[{'id':str(i),'channelId':publish.ALL_CHANNELS['youtube'],'text':'manual',

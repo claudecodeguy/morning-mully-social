@@ -56,7 +56,7 @@ def sync():
 
 def write(records):
     with (plan.ROOT / 'data/videos.csv').open('w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=FIELDS)
+        writer = csv.DictWriter(f, fieldnames=FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(records)
 

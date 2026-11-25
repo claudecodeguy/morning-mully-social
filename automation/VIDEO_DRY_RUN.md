@@ -1,3 +1,9 @@
+# Approved early rollout — November 24, 2026
+
+Owner approved all initial videos and live activation. The scheduler now fills earlier unoccupied video slots while preserving existing Buffer posts. All 55 tests pass. Current dry run: **V001 — Wednesday November 25, 2026 at 19:00 America/Toronto on Instagram Reels, Facebook Reels and YouTube Shorts**. Queue space permits one initial three-channel video while keeping a newsletter slot free. Remaining videos replenish as space becomes available.
+
+The December 9 preview below is historical and superseded by this approved change.
+
 # Video dry-run results — November 24, 2026
 
 No Buffer posts, channel schedules, approvals, publication history or activation variables were changed. All 54 automated tests passed, including existing image and newsletter tests and newsletter graphic rendering. All 14 public MP4s were downloaded from GitHub Pages with matching SHA256 checksums and checked with ffprobe.

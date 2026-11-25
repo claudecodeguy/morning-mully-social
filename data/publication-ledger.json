@@ -947,6 +947,43 @@
           }
         }
       }
+    },
+    {
+      "post_id": "V001",
+      "kind": "video",
+      "due": {
+        "instagram": "2026-11-26T00:00:00+00:00",
+        "facebook": "2026-11-26T00:00:00+00:00",
+        "youtube": "2026-11-26T00:00:00+00:00"
+      },
+      "channels": {
+        "instagram": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af61a2f62b70b94b00da2ab",
+            "text": "One good drive. A full week of replays. The camera roll has never worked this hard.\n\nTag the golfer this reminds you of.\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "needsApproval": false,
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-26T00:00:00+00:00",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/01_One_Good_Drive.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "instagram": {
+                "type": "reel",
+                "shouldShareToFeed": true
+              }
+            }
+          }
+        }
+      },
+      "sha256": "84e26ce52dbe72fa4f9ccb35c89219d3d4bf209941da2a5f7a8f8cc4f34e8f12"
     }
-  ]
+  ],
+  "video_schedule_after": "2026-12-09T00:51:00+00:00"
 }

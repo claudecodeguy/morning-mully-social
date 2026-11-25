@@ -982,6 +982,29 @@
             }
           },
           "scheduled_at": "2026-11-25T01:22:48.709294+00:00"
+        },
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "How many replays does one good drive deserve? Asking for the entire foursome. Who in your group does this?\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "needsApproval": false,
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-26T00:00:00+00:00",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/01_One_Good_Drive.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "reel"
+              }
+            }
+          }
         }
       },
       "sha256": "84e26ce52dbe72fa4f9ccb35c89219d3d4bf209941da2a5f7a8f8cc4f34e8f12"

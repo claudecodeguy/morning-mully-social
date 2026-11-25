@@ -389,7 +389,7 @@
       "channels": {
         "instagram": {
           "id": "6af76f6081e1228421bfa859",
-          "status": "scheduled",
+          "status": "sent",
           "payload": {
             "channelId": "6af61a2f62b70b94b00da2ab",
             "text": "Forty-eight hours before a golf trip, the group chat becomes a full-time job. None of us planned our weddings this carefully.\n\nWho's the organizer in your foursome?\n\n#GolfTrip #GolfBuddies #GolfMemes #GolfHumor #GolfLife",
@@ -412,7 +412,9 @@
                 "shouldShareToFeed": true
               }
             }
-          }
+          },
+          "published_at": "2026-11-25T00:51:10.570Z",
+          "published_confirmed_at": "2026-11-25T01:22:48.966935+00:00"
         },
         "facebook": {
           "id": "6af76f6378196a0a971a4849",

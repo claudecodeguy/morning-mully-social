@@ -29,7 +29,7 @@
       "sent_at": "2026-11-25T18:44:06.633949-05:00"
     },
     "facebook": {
-      "status": "accepted",
+      "status": "sent",
       "payload": {
         "channelId": "6af7463d62b70b94b01dd7b0",
         "mode": "shareNow",
@@ -51,7 +51,8 @@
           }
         }
       },
-      "buffer_id": "6b0772c8b96dd8d3517061a4"
+      "buffer_id": "6b0772c8b96dd8d3517061a4",
+      "sent_at": "2026-11-25T18:44:15.259823-05:00"
     }
   },
   "issue_url": "https://morningmully.beehiiv.com/p/tiger-is-reportedly-carrying-bunkers-325-yards",

@@ -1007,6 +1007,34 @@
             }
           },
           "scheduled_at": "2026-11-25T01:22:48.709294+00:00"
+        },
+        "youtube": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6b0612b68541f09ecb922b66",
+            "text": "One good drive. A full week of replays. The camera roll has never worked this hard.\n\nMore golf humour from Morning Mully. #Shorts\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "needsApproval": false,
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-26T00:00:00+00:00",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/01_One_Good_Drive.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "youtube": {
+                "type": "short",
+                "title": "One good drive, unlimited replays | Golf Memes",
+                "categoryId": "17",
+                "privacy": "public",
+                "madeForKids": false,
+                "notifySubscribers": true
+              }
+            }
+          }
         }
       },
       "sha256": "84e26ce52dbe72fa4f9ccb35c89219d3d4bf209941da2a5f7a8f8cc4f34e8f12"

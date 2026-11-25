@@ -15,7 +15,8 @@ import plan
 STATE_PATH = 'data/publication-ledger.json'
 ORG = '6af5e859fc6295e47dd61383'
 CHANNELS = {s: plan.CONFIG[s + '_channel_id'] for s in ('instagram', 'facebook')}
-POST_FIELDS = 'id channelId status text dueAt assets { ... on ImageAsset { source } }'
+ALL_CHANNELS = {**CHANNELS, 'youtube': plan.CONFIG['youtube_channel_id']}
+POST_FIELDS = 'id channelId status text dueAt sentAt assets { __typename ... on ImageAsset { source } ... on VideoAsset { source } }'
 POSTS = '''query($input: PostsInput!, $after: String) {
  posts(input: $input, first: 100, after: $after) {
  edges { node { %s } } pageInfo { endCursor hasNextPage }
@@ -54,7 +55,7 @@ class Buffer:
         result, after = [], None
         while True:
             page = self.query(POSTS, {'input': {'organizationId': ORG,
-                'filter': {'channelIds': list(CHANNELS.values())}}, 'after': after})['posts']
+                'filter': {'channelIds': list(ALL_CHANNELS.values())}}, 'after': after})['posts']
             result.extend(e['node'] for e in page['edges'])
             if not page['pageInfo']['hasNextPage']:
                 return result
@@ -159,6 +160,8 @@ def reconcile(ledger, posts):
     by_id = {p['id']: p for p in posts}
     for entry in ledger.data['entries']:
         for service, record in entry['channels'].items():
+            if record['status'] == 'sent':
+                continue  # confirmed delivery remains permanent even if Buffer archives it
             if record['status'] == 'pending':
                 raise RuntimeError('Uncertain intent for ' + entry['post_id'] + '/' + service +
                     '; reconcile in Buffer and ledger manually before any retry')
@@ -166,6 +169,9 @@ def reconcile(ledger, posts):
             if not post or post['status'] in ('error', 'draft', 'needs_approval'):
                 raise RuntimeError('Missing, failed, or unscheduled Buffer post: ' + record['id'])
             record['status'] = post['status']
+            if post['status'] == 'sent':
+                record['published_at'] = post.get('sentAt')
+                record['published_confirmed_at'] = datetime.now(timezone.utc).isoformat()
     ledger.save()
 
 
@@ -262,6 +268,7 @@ def refill(api, ledger, records, now, live=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--video-preview', action='store_true', help='Read-only preview of proposed mixed media schedule')
     parser.add_argument('--live', action='store_true')
     parser.add_argument('--remote-images', action='store_true')
     parser.add_argument('--connected', action='store_true', help='Read Buffer without writing')
@@ -269,13 +276,22 @@ def main():
     if args.live and (os.environ.get('PUBLISHING_ENABLED') != 'true' or
                      os.environ.get('GITHUB_REF') != 'refs/heads/main'):
         raise RuntimeError('Publishing is disabled or this is not main')
+    if args.live and args.video_preview:
+        raise RuntimeError('--video-preview cannot be combined with --live')
     records = validate_library(args.remote_images or args.live)
     print('Verified 61 records, file mappings, JPEG signatures and SHA256 checksums.')
     if args.live or args.connected:
         api = Buffer(os.environ.get('BUFFER_API_KEY'))
         ledger = Ledger() if args.live else type('PreviewLedger', (), {
             'data': json.loads((plan.ROOT / STATE_PATH).read_text())})()
-        for line in refill(api, ledger, records, datetime.now(timezone.utc), args.live):
+        if args.video_preview or os.environ.get('VIDEO_PUBLISHING_ENABLED') == 'true':
+            import rolling_queue
+            import video_library
+            videos = video_library.validate(remote=args.live)
+            lines = rolling_queue.refill(api, ledger, records, videos, datetime.now(timezone.utc), args.live)
+        else:
+            lines = refill(api, ledger, records, datetime.now(timezone.utc), args.live)
+        for line in lines:
             print(line)
     else:
         print('OFFLINE DRY RUN: no Buffer access. Eligible memes:', sum(plan.eligible(r) for r in records if r['content_type'] == 'meme'))

@@ -1,7 +1,7 @@
 {
   "feed_url": "https://rss.beehiiv.com/feeds/eDs7x5FU1F.xml",
   "pages_base_url": "https://claudecodeguy.github.io/morning-mully-social/",
-  "timezone": "America/New_York",
+  "timezone": "America/Toronto",
   "instagram_channel_id": "6af61a2f62b70b94b00da2ab",
   "facebook_channel_id": "6af7463d62b70b94b01dd7b0",
   "calendar": {
@@ -13,5 +13,16 @@
     "Saturday": "meme",
     "Sunday": "stat"
   },
-  "evergreen_queue_target": 9
+  "evergreen_queue_target": 9,
+  "youtube_channel_id": "6b0612b68541f09ecb922b66",
+  "video_calendar": {
+    "Monday": "video",
+    "Tuesday": "meme",
+    "Wednesday": "video",
+    "Thursday": "stat",
+    "Friday": "newsletter",
+    "Saturday": "video",
+    "Sunday": "stat"
+  },
+  "video_time": "19:00"
 }

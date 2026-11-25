@@ -161,6 +161,43 @@ def create_plan(start, days, feed=None, feed_error=None):
     return output
 
 
+def create_video_plan(start, days, feed=None, feed_error=None):
+    """Proposed calendar; content approvals and live activation remain independent."""
+    import video_library
+    ledger = json.loads((ROOT / 'data/publication-ledger.json').read_text())
+    used = {e['post_id'] for e in ledger['entries']}
+    items = []
+    banks = {kind:[r for r in rows(file) if eligible(r) and r['post_id'] not in used]
+             for kind,file in [('meme','memes.csv'),('stat','statistics.csv')]}
+    available = [r for r in video_library.read() if r['post_id'] not in used]
+    for n in range(days):
+        day = start + timedelta(days=n)
+        kind = CONFIG['video_calendar'][day.strftime('%A')]
+        if kind != 'video':
+            if kind == 'newsletter':
+                items.append(preview_newsletter(day,feed or [],feed_error))
+            elif banks[kind]:
+                items.append(preview_asset(banks[kind].pop(0),kind,day))
+            else:
+                items.append({'date':day.isoformat(),'type':kind,'status':'BLOCKED_EMPTY'})
+            # Monday/Wednesday have both the newsletter and a video.
+            continue
+        if day.strftime('%A') in ('Monday','Wednesday'):
+            items.append(preview_newsletter(day,feed or [],feed_error))
+        row = available.pop(0) if available else None
+        item = {'date':day.isoformat(),'type':'video','local_time':CONFIG['video_time'],
+                'timezone':CONFIG['timezone'], 'platforms':['instagram','facebook','youtube']}
+        if row:
+            item.update(post_id=row['post_id'], title=row['youtube_title'],
+                        video_url=row['public_url'],captions=video_library.captions(row),
+                        status='READY_FOR_REVIEW' if row['approval_status']=='APPROVED' else 'BLOCKED_APPROVAL',
+                        warning=row['review_notes'])
+        else:
+            item.update(status='BLOCKED_EMPTY', reason='No unused videos remain.')
+        items.append(item)
+    return sorted(items,key=lambda i:(i['date'],i['type']=='video'))
+
+
 def make_markdown(plan):
     lines = [
         "# Morning Mully: read-only content schedule", "",
@@ -171,19 +208,22 @@ def make_markdown(plan):
         lines.append(f"| {item['date']} | {item['type']} | {item.get('post_id', '—')} | {item['status']} |")
     for item in plan:
         lines.extend(["", f"## {item['date']} — {item['type']}", f"Status: {item['status']}"])
-        for field in ("title", "reason", "warning", "image_url", "issue_url", "source_url"):
+        for field in ("title", "reason", "warning", "image_url", "video_url", "local_time", "timezone", "issue_url", "source_url"):
             if item.get(field):
                 lines.append(f"{field}: {item[field]}")
         if item.get("captions"):
             lines.extend(["", "**Instagram caption**", "", item["captions"]["instagram"], "",
                           "**Facebook caption**", "", item["captions"]["facebook"], ""])
+        if item.get("captions", {}).get("youtube"):
+            lines.extend(["**YouTube description**", "", item["captions"]["youtube"], ""])
     return "\n".join(lines) + "\n"
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--date", help="Start date YYYY-MM-DD; defaults to today, New York time")
+    parser.add_argument("--date", help="Start date YYYY-MM-DD; defaults to today, Toronto time")
     parser.add_argument("--days", type=int, default=7)
+    parser.add_argument("--videos", action="store_true", help="Preview proposed video calendar; never activates publishing")
     parser.add_argument("--offline", action="store_true", help="Skip external RSS request")
     parser.add_argument("--output-dir", default="reports")
     opts = parser.parse_args()
@@ -201,7 +241,7 @@ def main():
             feed = read_feed()
         except (OSError, ET.ParseError, ValueError) as e:
             feed_error = "Beehiiv feed unavailable: " + str(e).splitlines()[0][:140]
-    plan = create_plan(day, opts.days, feed, feed_error)
+    plan = (create_video_plan if opts.videos else create_plan)(day, opts.days, feed, feed_error)
     dest = Path(opts.output_dir)
     dest.mkdir(parents=True, exist_ok=True)
     (dest / "preview.json").write_text(json.dumps({

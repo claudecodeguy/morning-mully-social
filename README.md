@@ -44,3 +44,7 @@ See [NEXT_STEP_README.md](NEXT_STEP_README.md) for verification results, activat
 ## Newsletter automation
 
 The cloud workflow `newsletter-cloud.yml` begins with the next issue on Monday, November 16, 2026. It requires no Mac, Codex session or additional AI key. The former local heartbeat is paused. A separate end-of-day watchdog verifies both Buffer deliveries and raises a GitHub issue on failure. Existing date-specific pending/accepted/sent history prevents duplicate posts. The deterministic cloud cover is simpler than a bespoke AI faces montage; no unattended AI image generation is claimed. See [cloud operations](automation/CLOUD_NEWSLETTER.md).
+
+## Automated Reels and Shorts (awaiting activation approval)
+
+The video feature adds three weekly videos across Instagram, Facebook and YouTube through the existing Buffer integration. Review [video setup and approval instructions](automation/VIDEO_PUBLISHING.md), [dry-run results](automation/VIDEO_DRY_RUN.md) and the [video caption library](data/videos.csv). Uploading MP4s creates library entries automatically; GitHub Actions provides a caption/approval form. Video publishing remains separately gated by `VIDEO_PUBLISHING_ENABLED`.

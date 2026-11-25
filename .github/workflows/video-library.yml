@@ -1,0 +1,92 @@
+name: Morning Mully - Video library and approval
+on:
+  push:
+    branches: [main]
+    paths: ['videos/**']
+  pull_request:
+    paths: ['videos/**', 'data/videos.csv', 'automation/video*.py', 'automation/rolling_queue.py', 'automation/test_video*.py']
+  workflow_dispatch:
+    inputs:
+      video_id:
+        description: 'Video ID to approve (e.g. V001); blank only discovers uploads'
+        type: string
+      approve:
+        description: 'I reviewed the full video/audio and approve its captions and final edit'
+        type: boolean
+        default: false
+      instagram_caption:
+        description: 'Optional replacement Instagram caption'
+        type: string
+      facebook_caption:
+        description: 'Optional replacement Facebook caption'
+        type: string
+      youtube_title:
+        description: 'Optional replacement YouTube title'
+        type: string
+      youtube_description:
+        description: 'Optional replacement YouTube description'
+        type: string
+      hashtags:
+        description: 'Optional replacement hashtags'
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: morning-mully-video-library
+  cancel-in-progress: false
+jobs:
+  library:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Discover uploads and apply explicit owner approval
+        env:
+          APPROVE: ${{ inputs.approve }}
+          VIDEO_ID: ${{ inputs.video_id }}
+          INSTAGRAM_CAPTION: ${{ inputs.instagram_caption }}
+          FACEBOOK_CAPTION: ${{ inputs.facebook_caption }}
+          YOUTUBE_TITLE: ${{ inputs.youtube_title }}
+          YOUTUBE_DESCRIPTION: ${{ inputs.youtube_description }}
+          HASHTAGS: ${{ inputs.hashtags }}
+        run: |
+          python3 automation/video_library.py sync
+          python3 - <<'PY'
+          import os, subprocess
+          if os.environ.get('APPROVE') == 'true':
+              if not os.environ.get('VIDEO_ID'):
+                  raise SystemExit('An ID is required for approval')
+              args = ['python3','automation/video_library.py','approve','--id',os.environ['VIDEO_ID']]
+              for field in ['instagram_caption','facebook_caption','youtube_title','youtube_description','hashtags']:
+                  if os.environ.get(field.upper()):
+                      args.extend(['--'+field.replace('_','-'),os.environ[field.upper()]])
+              subprocess.run(args,check=True)
+          PY
+          python3 automation/video_library.py verify
+      - name: Check video format
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          python3 automation/video_library.py probe
+      - name: Install existing newsletter test dependencies
+        run: python3 -m pip install -r automation/requirements.txt
+      - name: Run regression tests
+        run: python3 -m unittest discover -s automation -p 'test_*.py' -v
+      - name: Save library (does not activate publishing)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/videos.csv
+          if ! git diff --cached --quiet; then
+            git commit -m 'Discover or approve video library entries [skip ci]'
+            git push origin HEAD:main
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: video-library
+          path: data/videos.csv

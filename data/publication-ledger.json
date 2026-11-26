@@ -1205,7 +1205,8 @@
           "scheduled_at": "2026-11-26T21:36:13.788194+00:00"
         },
         "youtube": {
-          "status": "pending",
+          "id": "6b08a6582b711838a8b9de01",
+          "status": "accepted",
           "payload": {
             "channelId": "6b0612b68541f09ecb922b66",
             "text": "My initials. Your bag. Interesting ball-fitting strategy.\n\nMore golf humour from Morning Mully. #Shorts\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
@@ -1230,7 +1231,8 @@
                 "notifySubscribers": true
               }
             }
-          }
+          },
+          "scheduled_at": "2026-11-26T21:36:13.788194+00:00"
         }
       },
       "sha256": "0536572fd77a7ac197f7c2c5f4ab16a3d9b44c877640406e1cc84e59b936df34"

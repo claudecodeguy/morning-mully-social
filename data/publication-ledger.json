@@ -1057,7 +1057,8 @@
       },
       "channels": {
         "instagram": {
-          "status": "pending",
+          "id": "6b07ec80f13f49a925a48c8d",
+          "status": "accepted",
           "payload": {
             "channelId": "6af61a2f62b70b94b00da2ab",
             "text": "The green fee was $49. The statement would like a word.\n\nTag the golfer this reminds you of.\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
@@ -1078,7 +1079,8 @@
                 "shouldShareToFeed": true
               }
             }
-          }
+          },
+          "scheduled_at": "2026-11-26T08:23:24.713592+00:00"
         }
       },
       "sha256": "49239181cb841f28c390015ce68fa46dbb9d8866465d76572e39722e62e71e1a"

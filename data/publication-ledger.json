@@ -1143,6 +1143,42 @@
         }
       },
       "sha256": "49239181cb841f28c390015ce68fa46dbb9d8866465d76572e39722e62e71e1a"
+    },
+    {
+      "post_id": "V003",
+      "kind": "video",
+      "due": {
+        "instagram": "2026-12-01T00:00:00+00:00",
+        "facebook": "2026-12-01T00:00:00+00:00",
+        "youtube": "2026-12-01T00:00:00+00:00"
+      },
+      "channels": {
+        "instagram": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af61a2f62b70b94b00da2ab",
+            "text": "My initials. Your bag. Interesting ball-fitting strategy.\n\nTag the golfer this reminds you of.\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "needsApproval": false,
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-12-01T00:00:00+00:00",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/03_ProV1_Thief_Organic.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "instagram": {
+                "type": "reel",
+                "shouldShareToFeed": true
+              }
+            }
+          }
+        }
+      },
+      "sha256": "0536572fd77a7ac197f7c2c5f4ab16a3d9b44c877640406e1cc84e59b936df34"
     }
   ],
   "video_schedule_after": "2026-12-09T00:51:00+00:00"

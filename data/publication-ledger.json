@@ -1154,7 +1154,8 @@
       },
       "channels": {
         "instagram": {
-          "status": "pending",
+          "id": "6b08a6509bf88745f60078ab",
+          "status": "accepted",
           "payload": {
             "channelId": "6af61a2f62b70b94b00da2ab",
             "text": "My initials. Your bag. Interesting ball-fitting strategy.\n\nTag the golfer this reminds you of.\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
@@ -1175,7 +1176,8 @@
                 "shouldShareToFeed": true
               }
             }
-          }
+          },
+          "scheduled_at": "2026-11-26T21:36:13.788194+00:00"
         }
       },
       "sha256": "0536572fd77a7ac197f7c2c5f4ab16a3d9b44c877640406e1cc84e59b936df34"

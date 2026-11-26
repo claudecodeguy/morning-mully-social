@@ -1178,6 +1178,29 @@
             }
           },
           "scheduled_at": "2026-11-26T21:36:13.788194+00:00"
+        },
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "Finding your lost Pro V1 in your buddy\u2019s bag is a very specific trust exercise. Who in your group does this?\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "needsApproval": false,
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-12-01T00:00:00+00:00",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/03_ProV1_Thief_Organic.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "reel"
+              }
+            }
+          }
         }
       },
       "sha256": "0536572fd77a7ac197f7c2c5f4ab16a3d9b44c877640406e1cc84e59b936df34"

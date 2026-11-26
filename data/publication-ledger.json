@@ -1081,6 +1081,29 @@
             }
           },
           "scheduled_at": "2026-11-26T08:23:24.713592+00:00"
+        },
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "A $49 tee time and a $213 charge. Golf maths needs its own accountant. Who in your group does this?\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "needsApproval": false,
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-29T00:00:00+00:00",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/02_Green_Fee_213_SOUND_ON.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "reel"
+              }
+            }
+          }
         }
       },
       "sha256": "49239181cb841f28c390015ce68fa46dbb9d8866465d76572e39722e62e71e1a"

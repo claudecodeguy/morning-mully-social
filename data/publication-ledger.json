@@ -1046,6 +1046,42 @@
         }
       },
       "sha256": "84e26ce52dbe72fa4f9ccb35c89219d3d4bf209941da2a5f7a8f8cc4f34e8f12"
+    },
+    {
+      "post_id": "V002",
+      "kind": "video",
+      "due": {
+        "instagram": "2026-11-29T00:00:00+00:00",
+        "facebook": "2026-11-29T00:00:00+00:00",
+        "youtube": "2026-11-29T00:00:00+00:00"
+      },
+      "channels": {
+        "instagram": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af61a2f62b70b94b00da2ab",
+            "text": "The green fee was $49. The statement would like a word.\n\nTag the golfer this reminds you of.\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "needsApproval": false,
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-29T00:00:00+00:00",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/02_Green_Fee_213_SOUND_ON.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "instagram": {
+                "type": "reel",
+                "shouldShareToFeed": true
+              }
+            }
+          }
+        }
+      },
+      "sha256": "49239181cb841f28c390015ce68fa46dbb9d8866465d76572e39722e62e71e1a"
     }
   ],
   "video_schedule_after": "2026-12-09T00:51:00+00:00"

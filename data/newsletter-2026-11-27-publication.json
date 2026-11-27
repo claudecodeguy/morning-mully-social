@@ -29,7 +29,7 @@
       "sent_at": "2026-11-27T18:39:17.941146-05:00"
     },
     "facebook": {
-      "status": "pending",
+      "status": "accepted",
       "payload": {
         "channelId": "6af7463d62b70b94b01dd7b0",
         "mode": "shareNow",
@@ -50,7 +50,8 @@
             "type": "post"
           }
         }
-      }
+      },
+      "buffer_id": "6b0a14a8eab081a3f5073513"
     }
   },
   "issue_url": "https://morningmully.beehiiv.com/p/scheffler-passes-tiger-on-the-money-list",

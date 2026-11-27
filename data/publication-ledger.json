@@ -1330,6 +1330,42 @@
           "external_link": "https://www.youtube.com/watch?v=EJ4FkLuLcGY"
         }
       }
+    },
+    {
+      "post_id": "V005",
+      "kind": "video",
+      "due": {
+        "instagram": "2026-11-27T14:00:00+00:00",
+        "facebook": "2026-11-27T14:00:00+00:00",
+        "youtube": "2026-11-27T14:00:00+00:00"
+      },
+      "channels": {
+        "instagram": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af61a2f62b70b94b00da2ab",
+            "text": "310 carry. Zero witnesses. A flawless statistical model.\n\nTag the golfer this reminds you of.\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "needsApproval": false,
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-27T14:00:00+00:00",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/05_Driver_310_When_Not_Watching_ROUGH.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "instagram": {
+                "type": "reel",
+                "shouldShareToFeed": true
+              }
+            }
+          }
+        }
+      },
+      "sha256": "53c2bde9e1d7b75feef60de39af95289694c90cdab75691336fc98cf4ee691e6"
     }
   ],
   "video_schedule_after": "2026-12-09T00:51:00+00:00"

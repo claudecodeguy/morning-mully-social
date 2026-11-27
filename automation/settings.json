@@ -24,5 +24,6 @@
     "Saturday": "video",
     "Sunday": "video"
   },
-  "video_time": "19:00"
+  "video_time": "19:00",
+  "video_queue_days": 3
 }

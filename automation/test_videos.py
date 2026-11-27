@@ -16,6 +16,8 @@ from test_publish import FakeBuffer, Ledger
 class Buffer(FakeBuffer):
     def create(self,body):
         post=super().create(body)
+        self.serial=getattr(self,'serial',0)+1
+        post['id']='video-test-'+str(self.serial)
         for asset in post.get('assets',[]):
             asset['__typename']='VideoAsset' if 'video' in asset else 'ImageAsset'
         return post
@@ -54,7 +56,7 @@ class VideoTests(unittest.TestCase):
         video_dates=[e['due']['youtube'][:10] for e in self.ledger.data['entries'] if e['kind']=='video']
         self.assertEqual(video_dates[:3],['2026-12-01','2026-12-02','2026-12-03'])
         for s,cid in publish.ALL_CHANNELS.items():
-            self.assertLessEqual(publish.occupied(self.api.items,cid),10 if s=='youtube' else 9)
+            self.assertLessEqual(publish.occupied(self.api.items,cid),10)
         image_kinds=[e['kind'] for e in self.ledger.data['entries'] if e['kind']!='video']
         self.assertEqual(image_kinds[:2],['meme','stat'])
 
@@ -109,7 +111,7 @@ class VideoTests(unittest.TestCase):
         self.assertIn('video',video['assets'][0])
         self.assertEqual(video['dueAt'],'2026-12-01T00:00:00+00:00')
 
-    def test_first_video_can_fill_tomorrow_without_moving_existing_queue(self):
+    def test_late_video_can_fill_today_without_moving_existing_queue(self):
         self.now=datetime(2026,11,25,1,tzinfo=timezone.utc)
         self.api.items=[{'id':'future-'+str(i),'channelId':cid,'text':'existing',
                         'status':'scheduled','dueAt':'2026-12-09T00:51:00Z'}
@@ -117,8 +119,8 @@ class VideoTests(unittest.TestCase):
         original=copy.deepcopy(self.api.items)
         self.run_queue()
         self.assertEqual(self.api.items[:16],original)
-        self.assertEqual(len(self.api.writes),3)
-        self.assertTrue(all(p['dueAt']=='2026-11-26T00:00:00+00:00' for p in self.api.writes))
+        self.assertGreaterEqual(len(self.api.writes),3)
+        self.assertTrue(all(p['dueAt']=='2026-11-25T02:00:00+00:00' for p in self.api.writes[:3]))
         self.assertEqual({p['channelId'] for p in self.api.writes},set(publish.ALL_CHANNELS.values()))
 
     def test_full_youtube_stops_video_without_touching_posts(self):
@@ -126,7 +128,8 @@ class VideoTests(unittest.TestCase):
                          'status':'draft','dueAt':None} for i in range(10)]
         self.run_queue()
         self.assertTrue(self.api.writes)
-        self.assertTrue(all('image' in p['assets'][0] for p in self.api.writes))
+        self.assertTrue(any('video' in p['assets'][0] for p in self.api.writes))
+        self.assertTrue(all(p['channelId']!=publish.ALL_CHANNELS['youtube'] for p in self.api.writes))
         self.assertEqual(publish.occupied(self.api.items,publish.ALL_CHANNELS['youtube']),10)
 
     def test_external_duplicate_source_blocks_even_with_new_caption(self):
@@ -169,19 +172,21 @@ class VideoTests(unittest.TestCase):
         original=self.api.create
         def create(body):
             result=original(body)
-            if body['channelId']==publish.CHANNELS['instagram']:
+            if body['channelId']==publish.CHANNELS['instagram'] and not any(p['id'].startswith('manual-') for p in self.api.items):
                 self.api.items.extend({'id':'manual-'+str(i),'channelId':publish.CHANNELS['facebook'],
-                    'text':'manual','status':'draft'} for i in range(9))
+                    'text':'manual','status':'draft'} for i in range(10))
             return result
         self.api.create=create
         self.run_queue()
-        self.assertEqual(len(self.api.writes),1)
-        self.assertEqual(set(self.ledger.data['entries'][0]['channels']),{'instagram'})
+        self.assertTrue(all(p['channelId']!=publish.CHANNELS['facebook'] for p in self.api.writes))
+        self.assertEqual(publish.occupied(self.api.items,publish.CHANNELS['facebook']),10)
+        self.assertEqual(set(self.ledger.data['entries'][0]['channels']),{'instagram','youtube'})
         self.api.items=[p for p in self.api.items if p['channelId']!=publish.CHANNELS['facebook']]
         self.api.create=original
         self.run_queue()
-        self.assertEqual(self.api.writes[1]['channelId'],publish.CHANNELS['facebook'])
-        self.assertEqual(self.api.writes[2]['channelId'],publish.ALL_CHANNELS['youtube'])
+        first_id=self.ledger.data['entries'][0]['channels']['instagram']['id']
+        self.assertEqual(self.ledger.data['entries'][0]['channels']['facebook']['status'],'scheduled')
+        self.assertEqual(sum(p['channelId']==publish.CHANNELS['instagram'] and p['text']==self.api.items[0]['text'] for p in self.api.writes),1)
 
     def test_accepted_readback_failure_never_recreates_video(self):
         original=self.api.create

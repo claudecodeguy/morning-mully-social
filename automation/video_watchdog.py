@@ -34,6 +34,8 @@ def inspect(posts, channels, ledger, videos, now):
     for entry in entries:
         for service in publish.ALL_CHANNELS:
             record = entry['channels'].get(service)
+            if record is None and service in entry['due'] and publish.instant(entry['due'][service]) > now + timedelta(hours=24):
+                continue  # Normal rolling reservation; the next refill can complete this later slot.
             if record is None:
                 issues.append(f'PARTIAL: {entry["post_id"]}/{service} is missing; refill must complete this channel.')
                 continue
@@ -47,25 +49,26 @@ def inspect(posts, channels, ledger, videos, now):
                 issues.append(f'POST: {entry["post_id"]}/{service} is missing, failed or unscheduled in Buffer.')
     for offset in (0, 1):
         day = local.date() + timedelta(days=offset)
-        slot = datetime.combine(day, datetime.strptime(plan.CONFIG['video_time'], '%H:%M').time(), tz)
-        # Forecast only the next 24h. Confirm actual delivery after a 90-minute grace period.
-        future = now < slot <= now + timedelta(hours=24)
-        overdue = offset == 0 and now >= slot + timedelta(minutes=90)
-        if not future and not overdue:
-            continue
+        preferred = datetime.combine(day, datetime.strptime(plan.CONFIG['video_time'], '%H:%M').time(), tz)
         daily = [e for e in entries if any(publish.instant(t).astimezone(tz).date() == day
                                          for t in e['due'].values())]
         for service, cid in publish.ALL_CHANNELS.items():
             records = [(e, e['channels'].get(service)) for e in daily]
-            if overdue:
-                confirmed = any(r and r['status'] == 'sent' for _, r in records)
-                actual = any(r and by_id.get(r.get('id'), {}).get('status') == 'sent' for _, r in records)
-                if not (confirmed or actual):
-                    issues.append(f'MISSING DELIVERY: {day} {service}; no confirmed video after the 19:00 Toronto slot.')
-            elif not any(r and (p := by_id.get(r.get('id'))) and p['status'] == 'scheduled'
-                         and p['channelId'] == cid and p.get('dueAt')
-                         and publish.instant(p['dueAt']) == slot for _, r in records):
-                issues.append(f'SCHEDULE GAP: {day} 19:00 Toronto {service} is not queued; check capacity and existing post conflicts.')
+            expected = [publish.instant(e['due'][service]) for e,r in records if service in e['due']]
+            due = max(expected) if expected else preferred
+            confirmed = any(r and r['status'] == 'sent' for _,r in records)
+            actual = any(r and by_id.get(r.get('id'), {}).get('status') == 'sent' for _,r in records)
+            if confirmed or actual:
+                continue
+            if offset == 0 and now >= due + timedelta(minutes=90):
+                issues.append(f'MISSING DELIVERY: {day} {service}; no confirmed daily video after {due.astimezone(tz):%H:%M} Toronto.')
+            elif now < due <= now + timedelta(hours=24):
+                queued = any(r and (p := by_id.get(r.get('id'))) and p['status'] == 'scheduled'
+                    and p['channelId'] == cid and p.get('dueAt')
+                    and publish.instant(p['dueAt']) == publish.instant(e['due'][service])
+                    and publish.instant(p['dueAt']).astimezone(tz).date() == day for e,r in records)
+                if not queued:
+                    issues.append(f'SCHEDULE GAP: {day} {service} daily video is not queued; check capacity and existing post conflicts.')
     return {'checked_at': now.isoformat(), 'timezone': plan.CONFIG['timezone'],
             'approved_unscheduled_videos': remaining, 'issues': issues, 'healthy': not issues}
 

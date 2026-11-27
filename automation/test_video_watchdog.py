@@ -74,6 +74,19 @@ class WatchdogTests(unittest.TestCase):
         self.videos=self.videos[:9]  # two in ledger, seven unused
         self.assertTrue(any('LOW STOCK: 7' in i for i in self.check()['issues']))
 
+    def test_safe_alternate_time_satisfies_daily_coverage(self):
+        for post in self.posts[3:]:post['dueAt']='2026-11-27T14:00:00Z'
+        self.ledger['entries'][1]['due']=dict.fromkeys(publish.ALL_CHANNELS,'2026-11-27T14:00:00Z')
+        self.assertTrue(self.check()['healthy'])
+
+    def test_early_delivery_is_healthy_and_missing_early_delivery_alerts(self):
+        self.now=datetime.fromisoformat('2026-11-27T16:00:00+00:00')
+        self.ledger['entries'][1]['due']=dict.fromkeys(publish.ALL_CHANNELS,'2026-11-27T14:00:00Z')
+        for post in self.posts[3:]:post.update(dueAt='2026-11-27T14:00:00Z',status='sent')
+        self.assertTrue(self.check()['healthy'])
+        self.posts[-1]['status']='sending'
+        self.assertTrue(any('MISSING DELIVERY' in x and 'youtube' in x for x in self.check()['issues']))
+
     def test_wrong_time_does_not_satisfy_daily_coverage(self):
         for post in self.posts[3:]:post['dueAt']='2026-11-28T01:00:00Z'
         self.assertEqual(sum('SCHEDULE GAP' in i for i in self.check()['issues']),3)
@@ -88,7 +101,7 @@ class WatchdogTests(unittest.TestCase):
         self.ledger['entries']=[];self.posts=[]
         issues=self.check()['issues']
         self.assertFalse(any('MISSING DELIVERY' in i for i in issues))
-        self.assertTrue(all('2027-03-15 19:00' in i for i in issues))
+        self.assertTrue(all('2027-03-15' in i for i in issues))
         self.now=datetime.fromisoformat('2027-03-15T00:30:00+00:00')
         self.assertTrue(any('MISSING DELIVERY: 2027-03-14' in i for i in self.check()['issues']))
 

@@ -1,6 +1,32 @@
 {
   "issue_date": "2026-11-27",
-  "channels": {},
+  "channels": {
+    "instagram": {
+      "status": "pending",
+      "payload": {
+        "channelId": "6af61a2f62b70b94b00da2ab",
+        "mode": "shareNow",
+        "schedulingType": "automatic",
+        "text": "Today's Morning Mully is out.\n\nScheffler passes Tiger on the money list\n\nGolf news, a few laughs, and something to send your foursome.\n\nRead the full issue through the link in bio.\n\n#MorningMully #GolfNews #WeekendGolfer #GolfLife #Golf",
+        "assets": [
+          {
+            "image": {
+              "url": "https://raw.githubusercontent.com/claudecodeguy/morning-mully-social/7010d46c493335eb780e563d85a7130763f40d3e/assets/newsletters/2026-11-27-cloud.png",
+              "metadata": {
+                "altText": "Morning Mully newsletter: Scheffler passes Tiger on the money list"
+              }
+            }
+          }
+        ],
+        "metadata": {
+          "instagram": {
+            "type": "post",
+            "shouldShareToFeed": true
+          }
+        }
+      }
+    }
+  },
   "issue_url": "https://morningmully.beehiiv.com/p/scheffler-passes-tiger-on-the-money-list",
   "captions": {
     "instagram": "Today's Morning Mully is out.\n\nScheffler passes Tiger on the money list\n\nGolf news, a few laughs, and something to send your foursome.\n\nRead the full issue through the link in bio.\n\n#MorningMully #GolfNews #WeekendGolfer #GolfLife #Golf",

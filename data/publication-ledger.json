@@ -1342,7 +1342,7 @@
       "channels": {
         "instagram": {
           "id": "6b08e965548b6e180d52af25",
-          "status": "scheduled",
+          "status": "sent",
           "payload": {
             "channelId": "6af61a2f62b70b94b00da2ab",
             "text": "310 carry. Zero witnesses. A flawless statistical model.\n\nTag the golfer this reminds you of.\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
@@ -1364,11 +1364,13 @@
               }
             }
           },
-          "scheduled_at": "2026-11-27T02:22:24.577059+00:00"
+          "scheduled_at": "2026-11-27T02:22:24.577059+00:00",
+          "published_at": "2026-11-27T14:03:02.402Z",
+          "published_confirmed_at": "2026-11-27T21:58:45.106939+00:00"
         },
         "facebook": {
           "id": "6b08e96b07985b96e308165a",
-          "status": "scheduled",
+          "status": "sent",
           "payload": {
             "channelId": "6af7463d62b70b94b01dd7b0",
             "text": "Every foursome has a 310-yard driver who only performs behind closed doors. Who in your group does this?\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
@@ -1389,11 +1391,13 @@
               }
             }
           },
-          "scheduled_at": "2026-11-27T02:22:24.577059+00:00"
+          "scheduled_at": "2026-11-27T02:22:24.577059+00:00",
+          "published_at": "2026-11-27T14:01:50.444Z",
+          "published_confirmed_at": "2026-11-27T21:58:45.106959+00:00"
         },
         "youtube": {
           "id": "6b08e96f70e2a88e2ced2c45",
-          "status": "scheduled",
+          "status": "sent",
           "payload": {
             "channelId": "6b0612b68541f09ecb922b66",
             "text": "310 carry. Zero witnesses. A flawless statistical model.\n\nMore golf humour from Morning Mully. #Shorts\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
@@ -1419,7 +1423,9 @@
               }
             }
           },
-          "scheduled_at": "2026-11-27T02:22:24.577059+00:00"
+          "scheduled_at": "2026-11-27T02:22:24.577059+00:00",
+          "published_at": "2026-11-27T14:01:22.014Z",
+          "published_confirmed_at": "2026-11-27T21:58:45.106961+00:00"
         }
       },
       "sha256": "53c2bde9e1d7b75feef60de39af95289694c90cdab75691336fc98cf4ee691e6"

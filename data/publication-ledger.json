@@ -1248,7 +1248,7 @@
       "sha256": "b858504657b2e9ac2c4e6096a6335e23a83003eb1d7deecd2e6c39353a8c38d3",
       "channels": {
         "instagram": {
-          "status": "pending",
+          "status": "accepted",
           "payload": {
             "channelId": "6af61a2f62b70b94b00da2ab",
             "text": "Two mulligans and a foot wedge later, the maths gets very creative.\n\nTag the golfer this reminds you of.\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
@@ -1267,7 +1267,9 @@
                 "shouldShareToFeed": true
               }
             }
-          }
+          },
+          "id": "6b08de2c07985b96e303b7fd",
+          "scheduled_at": "2026-11-27T01:34:36.724Z"
         },
         "facebook": {
           "status": "pending",

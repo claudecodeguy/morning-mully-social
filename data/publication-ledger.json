@@ -1434,7 +1434,8 @@
       },
       "channels": {
         "youtube": {
-          "status": "pending",
+          "id": "6b08e974548b6e180d52b2d0",
+          "status": "accepted",
           "payload": {
             "channelId": "6b0612b68541f09ecb922b66",
             "text": "His four-footer is good. My two-footer needs a rules committee.\n\nMore golf humour from Morning Mully. #Shorts\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
@@ -1459,7 +1460,8 @@
                 "notifySubscribers": true
               }
             }
-          }
+          },
+          "scheduled_at": "2026-11-27T02:22:24.577059+00:00"
         }
       },
       "sha256": "e8ae0c90e9c3748bf5735a80b7fe56d47254b1f0e8429307746126313c0a7f8e"

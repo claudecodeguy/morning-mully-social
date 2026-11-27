@@ -1423,6 +1423,46 @@
         }
       },
       "sha256": "53c2bde9e1d7b75feef60de39af95289694c90cdab75691336fc98cf4ee691e6"
+    },
+    {
+      "post_id": "V006",
+      "kind": "video",
+      "due": {
+        "instagram": "2026-11-30T00:00:00+00:00",
+        "facebook": "2026-11-30T00:00:00+00:00",
+        "youtube": "2026-11-30T00:00:00+00:00"
+      },
+      "channels": {
+        "youtube": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6b0612b68541f09ecb922b66",
+            "text": "His four-footer is good. My two-footer needs a rules committee.\n\nMore golf humour from Morning Mully. #Shorts\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "needsApproval": false,
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-30T00:00:00+00:00",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/05_Gimme_Hypocrite_SOUND_ON.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "youtube": {
+                "type": "short",
+                "title": "The gimme double standard | Golf Memes",
+                "categoryId": "17",
+                "privacy": "public",
+                "madeForKids": false,
+                "notifySubscribers": true
+              }
+            }
+          }
+        }
+      },
+      "sha256": "e8ae0c90e9c3748bf5735a80b7fe56d47254b1f0e8429307746126313c0a7f8e"
     }
   ],
   "video_schedule_after": "2026-12-09T00:51:00+00:00"

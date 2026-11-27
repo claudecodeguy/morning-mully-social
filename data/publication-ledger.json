@@ -1365,6 +1365,29 @@
             }
           },
           "scheduled_at": "2026-11-27T02:22:24.577059+00:00"
+        },
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "Every foursome has a 310-yard driver who only performs behind closed doors. Who in your group does this?\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "needsApproval": false,
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-11-27T14:00:00+00:00",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/05_Driver_310_When_Not_Watching_ROUGH.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "reel"
+              }
+            }
+          }
         }
       },
       "sha256": "53c2bde9e1d7b75feef60de39af95289694c90cdab75691336fc98cf4ee691e6"

@@ -2,9 +2,9 @@ name: Morning Mully - Video library and approval
 on:
   push:
     branches: [main]
-    paths: ['videos/**']
+    paths: ['videos/**', '*.mp4']
   pull_request:
-    paths: ['videos/**', 'data/videos.csv', 'automation/video*.py', 'automation/rolling_queue.py', 'automation/test_video*.py']
+    paths: ['videos/**', '*.mp4', 'data/videos.csv', 'automation/video*.py', 'automation/rolling_queue.py', 'automation/test_video*.py']
   workflow_dispatch:
     inputs:
       video_id:

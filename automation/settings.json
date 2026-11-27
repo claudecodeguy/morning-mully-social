@@ -17,12 +17,12 @@
   "youtube_channel_id": "6b0612b68541f09ecb922b66",
   "video_calendar": {
     "Monday": "video",
-    "Tuesday": "meme",
+    "Tuesday": "video",
     "Wednesday": "video",
-    "Thursday": "stat",
-    "Friday": "newsletter",
+    "Thursday": "video",
+    "Friday": "video",
     "Saturday": "video",
-    "Sunday": "stat"
+    "Sunday": "video"
   },
   "video_time": "19:00"
 }

@@ -102,45 +102,55 @@ def refill(api, ledger, images, videos, now, live=False):
                 return log
     for n in range(15):
         day = now.astimezone(tz).date() + timedelta(days=n)
-        kind = plan.CONFIG['video_calendar'][day.strftime('%A')]
-        if kind == 'newsletter':
-            continue
-        slot_floor = now + timedelta(minutes=15) if kind == 'video' else floor
-        services_for_kind = publish.ALL_CHANNELS if kind == 'video' else publish.CHANNELS
-        dues = {}
-        for service,cid in services_for_kind.items():
+        for kind in ('video', plan.CONFIG['calendar'][day.strftime('%A')]):
+            if kind == 'newsletter':
+                continue
+            slot_floor = now + timedelta(minutes=15) if kind == 'video' else floor
+            services_for_kind = publish.ALL_CHANNELS if kind == 'video' else publish.CHANNELS
+            dues = {}
+            for service,cid in services_for_kind.items():
+                if kind == 'video':
+                    candidates = [datetime.combine(day,time.fromisoformat(plan.CONFIG['video_time']),tz)]
+                else:
+                    c = channels[cid]
+                    candidates = [datetime.combine(day,time.fromisoformat(t),ZoneInfo(c['timezone']))
+                        for s in c['postingSchedule'] if s['day'] == day.strftime('%a').lower() and not s['paused']
+                        for t in s['times']]
+                # Respect occupied slots and separate videos from any scheduled newsletter by >= 2h.
+                busy = [publish.instant(p.get('sentAt') or p['dueAt']) for p in posts
+                        if p['channelId'] == cid and (p.get('sentAt') or p.get('dueAt'))]
+                video_slot = datetime.combine(day,time.fromisoformat(plan.CONFIG['video_time']),tz)
+                chosen = [t for t in candidates if t > slot_floor
+                    and (kind == 'video' or abs(t-video_slot) >= timedelta(hours=2))
+                    and not any(abs(t-b) < timedelta(hours=2) for b in busy)]
+                if kind != 'video' and candidates and not chosen:
+                    # Use a separate safe daytime slot when the channel's only slot conflicts.
+                    candidate = datetime.combine(day,time(12),tz)
+                    if candidate > slot_floor and not any(abs(candidate-b) < timedelta(hours=2) for b in busy):
+                        chosen = [candidate]
+                if chosen:
+                    dues[service] = min(chosen).astimezone(timezone.utc).isoformat()
+            if len(dues) != len(services_for_kind):
+                if kind == 'video':
+                    log.append(f'{day} video SLOT UNAVAILABLE: existing post within two hours or slot elapsed')
+                continue
+            # Ledger prevents repeated content AND reusing a date even after a post is sent.
+            if any(e['kind'] == kind and any(publish.instant(t).astimezone(tz).date() == day
+                   for t in e['due'].values()) for e in ledger.data['entries']):
+                continue
+            if not banks[kind]:
+                log.append(f'{day} BLOCKED: no approved unused {kind}')
+                continue
+            if any(publish.occupied(posts,cid) >= targets[s] for s,cid in services_for_kind.items()):
+                log.append(f'{day} {kind} CAPACITY: waiting for queue space on all required channels')
+                continue
+            row = banks[kind].pop(0)
+            entry = {'post_id':row['post_id'],'kind':kind,'due':dues,'channels':{}}
             if kind == 'video':
-                candidates = [datetime.combine(day,time.fromisoformat(plan.CONFIG['video_time']),tz)]
-            else:
-                c = channels[cid]
-                candidates = [datetime.combine(day,time.fromisoformat(t),ZoneInfo(c['timezone']))
-                    for s in c['postingSchedule'] if s['day'] == day.strftime('%a').lower() and not s['paused']
-                    for t in s['times']]
-            # Respect occupied slots and separate videos from any scheduled newsletter by >= 2h.
-            busy = [publish.instant(p['dueAt']) for p in posts if p['channelId'] == cid
-                    and p.get('dueAt') and p['status'] != 'sent']
-            chosen = [t for t in candidates if t > slot_floor and not any(abs(t-b) < timedelta(hours=2) for b in busy)]
-            if chosen:
-                dues[service] = min(chosen).astimezone(timezone.utc).isoformat()
-        if len(dues) != len(services_for_kind):
-            continue
-        # Ledger prevents repeated content AND reusing a date even after a post is sent.
-        if any(e['kind'] == kind and any(publish.instant(t).astimezone(tz).date() == day
-               for t in e['due'].values()) for e in ledger.data['entries']):
-            continue
-        if not banks[kind]:
-            log.append(f'{day} BLOCKED: no approved unused {kind}')
-            continue
-        if any(publish.occupied(posts,cid) >= targets[s] for s,cid in services_for_kind.items()):
-            log.append(f'{day} CAPACITY: waiting for queue space on all required channels')
-            break
-        row = banks[kind].pop(0)
-        entry = {'post_id':row['post_id'],'kind':kind,'due':dues,'channels':{}}
-        if kind == 'video':
-            entry['sha256'] = row['sha256']
-            if any(e.get('sha256') == row['sha256'] for e in ledger.data['entries']):
-                raise RuntimeError('Video bytes already used; renamed duplicate blocked')
-        ledger.data['entries'].append(entry)
-        if not send(entry):
-            break
+                entry['sha256'] = row['sha256']
+                if any(e.get('sha256') == row['sha256'] for e in ledger.data['entries']):
+                    raise RuntimeError('Video bytes already used; renamed duplicate blocked')
+            ledger.data['entries'].append(entry)
+            if not send(entry):
+                return log
     return log

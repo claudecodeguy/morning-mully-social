@@ -172,18 +172,13 @@ def create_video_plan(start, days, feed=None, feed_error=None):
     available = [r for r in video_library.read() if r['post_id'] not in used]
     for n in range(days):
         day = start + timedelta(days=n)
-        kind = CONFIG['video_calendar'][day.strftime('%A')]
-        if kind != 'video':
-            if kind == 'newsletter':
-                items.append(preview_newsletter(day,feed or [],feed_error))
-            elif banks[kind]:
-                items.append(preview_asset(banks[kind].pop(0),kind,day))
-            else:
-                items.append({'date':day.isoformat(),'type':kind,'status':'BLOCKED_EMPTY'})
-            # Monday/Wednesday have both the newsletter and a video.
-            continue
-        if day.strftime('%A') in ('Monday','Wednesday'):
+        kind = CONFIG['calendar'][day.strftime('%A')]
+        if kind == 'newsletter':
             items.append(preview_newsletter(day,feed or [],feed_error))
+        elif banks[kind]:
+            items.append(preview_asset(banks[kind].pop(0),kind,day))
+        else:
+            items.append({'date':day.isoformat(),'type':kind,'status':'BLOCKED_EMPTY'})
         row = available.pop(0) if available else None
         item = {'date':day.isoformat(),'type':'video','local_time':CONFIG['video_time'],
                 'timezone':CONFIG['timezone'], 'platforms':['instagram','facebook','youtube']}

@@ -22,10 +22,23 @@ def read():
         return list(csv.DictReader(f))
 
 
+def files():
+    # Some uploads land at repository root. Preserve their public paths and bytes.
+    found = {}
+    for folder in (plan.ROOT / 'videos', plan.ROOT):
+        for path in sorted(folder.glob('*')):
+            if path.is_file() and path.suffix.lower() == '.mp4':
+                if path.name in found:
+                    raise ValueError('Ambiguous video filename: ' + path.name)
+                found[path.name] = path
+    return found
+
+
 def public_url(filename):
     if Path(filename).name != filename or Path(filename).suffix.lower() != '.mp4':
         raise ValueError('Unsafe video filename')
-    return plan.CONFIG['pages_base_url'].rstrip('/') + '/videos/' + quote(filename)
+    path = files().get(filename, plan.ROOT / 'videos' / filename)
+    return plan.CONFIG['pages_base_url'].rstrip('/') + '/' + quote(path.relative_to(plan.ROOT).as_posix(), safe='/')
 
 
 def sync():
@@ -33,7 +46,7 @@ def sync():
     known = {r['filename']: r for r in records}
     if len(known) != len(records):
         raise ValueError('Duplicate video filenames')
-    for path in sorted((plan.ROOT / 'videos').glob('*')):
+    for path in sorted(files().values()):
         if path.suffix.lower() != '.mp4':
             continue
         digest = hashlib.sha256(path.read_bytes()).hexdigest()
@@ -78,7 +91,7 @@ def validate(remote=False):
         if not r['post_id'].startswith('V') or not r['post_id'][1:].isdigit():
             raise ValueError('Invalid video ID')
         url = public_url(r['filename'])
-        path = plan.ROOT / 'videos' / r['filename']
+        path = files()[r['filename']]
         data = path.read_bytes()
         if r['public_url'] != url or hashlib.sha256(data).hexdigest() != r['sha256'] or data[4:8] != b'ftyp':
             raise ValueError('Video mapping/checksum/MP4 mismatch: ' + r['post_id'])
@@ -92,8 +105,7 @@ def validate(remote=False):
                 hosted = response.read()
                 if response.status != 200 or hashlib.sha256(hosted).hexdigest() != r['sha256']:
                     raise ValueError('Hosted video mismatch: ' + r['post_id'])
-    files = {p.name for p in (plan.ROOT / 'videos').iterdir() if p.suffix.lower() == '.mp4'}
-    if files != names:
+    if set(files()) != names:
         raise ValueError('Run video_library.py sync for new uploads')
     return records
 
@@ -102,7 +114,7 @@ def probe():
     """Conservative format shared by Reels and Shorts; no transcoding or paid services."""
     for r in validate():
         result = subprocess.check_output(['ffprobe','-v','quiet','-show_streams','-show_format',
-            '-of','json',str(plan.ROOT / 'videos' / r['filename'])], text=True)
+            '-of','json',str(files()[r['filename']])], text=True)
         info = json.loads(result)
         stream = next(s for s in info['streams'] if s['codec_type'] == 'video')
         if stream['codec_name'] != 'h264' or stream['width'] > stream['height'] or not 3 <= float(info['format']['duration']) <= 60:

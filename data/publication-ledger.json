@@ -1341,7 +1341,8 @@
       },
       "channels": {
         "instagram": {
-          "status": "pending",
+          "id": "6b08e965548b6e180d52af25",
+          "status": "accepted",
           "payload": {
             "channelId": "6af61a2f62b70b94b00da2ab",
             "text": "310 carry. Zero witnesses. A flawless statistical model.\n\nTag the golfer this reminds you of.\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
@@ -1362,7 +1363,8 @@
                 "shouldShareToFeed": true
               }
             }
-          }
+          },
+          "scheduled_at": "2026-11-27T02:22:24.577059+00:00"
         }
       },
       "sha256": "53c2bde9e1d7b75feef60de39af95289694c90cdab75691336fc98cf4ee691e6"

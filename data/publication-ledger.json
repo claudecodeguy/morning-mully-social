@@ -1236,6 +1236,86 @@
         }
       },
       "sha256": "0536572fd77a7ac197f7c2c5f4ab16a3d9b44c877640406e1cc84e59b936df34"
+    },
+    {
+      "post_id": "V004",
+      "kind": "video",
+      "due": {
+        "instagram": "2026-11-27T01:34:00.751628+00:00",
+        "facebook": "2026-11-27T01:34:00.751628+00:00",
+        "youtube": "2026-11-27T01:34:00.751628+00:00"
+      },
+      "sha256": "b858504657b2e9ac2c4e6096a6335e23a83003eb1d7deecd2e6c39353a8c38d3",
+      "channels": {
+        "instagram": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af61a2f62b70b94b00da2ab",
+            "text": "Two mulligans and a foot wedge later, the maths gets very creative.\n\nTag the golfer this reminds you of.\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "schedulingType": "automatic",
+            "mode": "shareNow",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/04_Creative_Scorekeeping_SOUND_ON.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "instagram": {
+                "type": "reel",
+                "shouldShareToFeed": true
+              }
+            }
+          }
+        },
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "The scorecard gets easier when you start subtracting the shots you didn\u2019t enjoy. Who in your group does this?\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "schedulingType": "automatic",
+            "mode": "shareNow",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/04_Creative_Scorekeeping_SOUND_ON.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "reel"
+              }
+            }
+          }
+        },
+        "youtube": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6b0612b68541f09ecb922b66",
+            "text": "Two mulligans and a foot wedge later, the maths gets very creative.\n\nMore golf humour from Morning Mully. #Shorts\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "schedulingType": "automatic",
+            "mode": "shareNow",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/04_Creative_Scorekeeping_SOUND_ON.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "youtube": {
+                "title": "Creative accounting, golf edition | Golf Memes",
+                "categoryId": "17",
+                "privacy": "public",
+                "madeForKids": false,
+                "notifySubscribers": true
+              }
+            }
+          }
+        }
+      }
     }
   ],
   "video_schedule_after": "2026-12-09T00:51:00+00:00"

@@ -1470,7 +1470,8 @@
           "scheduled_at": "2026-11-27T02:22:24.577059+00:00"
         },
         "instagram": {
-          "status": "pending",
+          "id": "6b0a509470e80ae8f1cd6858",
+          "status": "accepted",
           "payload": {
             "channelId": "6af61a2f62b70b94b00da2ab",
             "text": "His four-footer is good. My two-footer needs a rules committee.\n\nTag the golfer this reminds you of.\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
@@ -1491,7 +1492,8 @@
                 "shouldShareToFeed": true
               }
             }
-          }
+          },
+          "scheduled_at": "2026-11-28T03:54:57.770925+00:00"
         }
       },
       "sha256": "e8ae0c90e9c3748bf5735a80b7fe56d47254b1f0e8429307746126313c0a7f8e"

@@ -1496,7 +1496,8 @@
           "scheduled_at": "2026-11-28T03:54:57.770925+00:00"
         },
         "facebook": {
-          "status": "pending",
+          "id": "6b0a509823fb5b7700185cfc",
+          "status": "accepted",
           "payload": {
             "channelId": "6af7463d62b70b94b01dd7b0",
             "text": "The gimme radius apparently changes depending on who\u2019s holding the putter. Who in your group does this?\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
@@ -1516,7 +1517,8 @@
                 "type": "reel"
               }
             }
-          }
+          },
+          "scheduled_at": "2026-11-28T03:54:57.770925+00:00"
         }
       },
       "sha256": "e8ae0c90e9c3748bf5735a80b7fe56d47254b1f0e8429307746126313c0a7f8e"

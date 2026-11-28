@@ -1524,6 +1524,41 @@
         }
       },
       "sha256": "e8ae0c90e9c3748bf5735a80b7fe56d47254b1f0e8429307746126313c0a7f8e"
+    },
+    {
+      "post_id": "V007",
+      "kind": "video",
+      "due": {
+        "instagram": "2026-12-02T00:00:00+00:00",
+        "facebook": "2026-12-02T00:00:00+00:00",
+        "youtube": "2026-12-02T00:00:00+00:00"
+      },
+      "channels": {
+        "facebook": {
+          "status": "pending",
+          "payload": {
+            "channelId": "6af7463d62b70b94b01dd7b0",
+            "text": "Five minutes ago I had the exact location. Now we\u2019re conducting a search operation. Who in your group does this?\n\n#GolfMemes #GolfHumor #WeekendGolfer #MorningMully",
+            "needsApproval": false,
+            "schedulingType": "automatic",
+            "mode": "customScheduled",
+            "dueAt": "2026-12-02T00:00:00+00:00",
+            "assets": [
+              {
+                "video": {
+                  "url": "https://claudecodeguy.github.io/morning-mully-social/videos/05_I_Know_Where_It_Landed.mp4"
+                }
+              }
+            ],
+            "metadata": {
+              "facebook": {
+                "type": "reel"
+              }
+            }
+          }
+        }
+      },
+      "sha256": "650e21f82f537284be5b00022ac4e2389503c342aaa37f47d6ce1bc3f2892539"
     }
   ],
   "video_schedule_after": "2026-12-09T00:51:00+00:00"
